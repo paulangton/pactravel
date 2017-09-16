@@ -1,5 +1,12 @@
-certifi >= 14.05.14
-six >= 1.10
-python_dateutil >= 2.5.3
-setuptools >= 21.0.0
-urllib3 >= 1.15.1
+certifi==2017.7.27.1
+click==6.7
+Flask==0.12.2
+itsdangerous==0.24
+Jinja2==2.9.6
+MarkupSafe==1.0
+pkg-resources==0.0.0
+python-dateutil==2.6.1
+six==1.10.0
+swagger-client==1.0.0
+urllib3==1.22
+Werkzeug==0.12.2
