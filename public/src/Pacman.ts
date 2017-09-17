@@ -52,16 +52,20 @@ class Pacman {
     console.log(direction);
 
     let y_c = speed * Math.sin(direction);
-    if (this.lat + y_c <= this.toNode.lat + n && this.lat + y_c >= this.toNode.lat - n) {
+    if (this.lat + y_c <= this.toNode.lat + y_c && this.lat + y_c >= this.toNode.lat - y_c) {
       this.lat = this.toNode.lat;
     }
-    this.lat += y_c;
+    else {
+      this.lat += y_c;
+    }
 
     let x_c = speed * Math.cos(direction);
-    if (this.long + x_c <= this.toNode.long + n && this.lat + x_c >= this.toNode.long - n) {
+    if (this.long + x_c <= this.toNode.long + x_c && this.lat + x_c >= this.toNode.long - x_c) {
       this.long = this.toNode.long;
     }
-    this.long += x_c;
+    else {
+      this.long += x_c;
+    }
   }
 
   // draws a pacman
