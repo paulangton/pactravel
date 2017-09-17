@@ -3,20 +3,14 @@ import time
 import swagger_client
 from swagger_client.rest import ApiException
 from pprint import pprint
-import networkx as nx 
+import networkx as nx
 from networkx.readwrite import json_graph
 from amadeus.next_location import Next_Desitination
 
 def calculateIntersectionPoint(x1, y1, x2, y2, x3, y3, x4, y4):
-	denom1 = ((x1 - x2)*(y3-y4) - (y1-y2)*(x3-x4))
-	denom2 = ((x1 - x2)*(y3-y4) - (y1-y2)*(x3-x4))
-	if denom1 == 0 or denom2 == 0:
-		return (x1, y1)
-	x = (x1*y2 - y1*x2)*(x3-x4)-(x1-x2)*(x3*y4 - x4*y3) / denom1
-	y = (x1*y2 - y1*x2)*(y3-y4)-(y1-y2)*(x3*y4 - x4*y3) / denom2
-	
+	x = (x1*y2 - y1*x2)*(x3-x4)-(x1-x2)*(x3*y4 - x4*y3) / ((x1 - x2)*(y3-y4) - (y1-y2)*(x3-x4))
+	y = (x1*y2 - y1*x2)*(y3-y4)-(y1-y2)*(x3*y4 - x4*y3) / ((x1 - x2)*(y3-y4) - (y1-y2)*(x3-x4))
 	return (x,y)
-
 
 def checkDegree(graph):
 	degs = nx.degree(graph)
@@ -40,7 +34,7 @@ def api_call(latitude=42.3656132, longitude=-71.00956020000001, category="Museum
 	social_media = False # bool | Enabling this includes images from Instagram in the output results. This is disabled by default, since these images are often just pictures of people or food, which often have little relevance to the actual location (optional) (default to false)
 	image_size = 'MEDIUM' # str | The size of the images you'd like to see in the response (optional) (default to MEDIUM)
 	number_of_images = 1 # int | Number of images to display. (optional) (default to 4)
-	try: 
+	try:
 		# YapQ Geosearch - Find landmarks and attractions near a given point.
 		api_response = api_instance.yap_q_geosearch(apikey, latitude, longitude, radius, lang=lang, category=category, geonames=geonames, vibes=vibes, social_media=social_media, image_size=image_size, number_of_images=number_of_images, number_of_results=number_of_results)
 		return api_response.points_of_interest
@@ -51,7 +45,7 @@ def api_call(latitude=42.3656132, longitude=-71.00956020000001, category="Museum
 def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit=42.3656132, longit=-71.00956020000001, airport_code="BOS" ):
 	graph = nx.Graph()
 	poi = api_call(latitude=latit, longitude=longit, number_of_results=number_of_results)
-	graph.add_node(0, location=(latit, longit), title=initial_airport, desc="Airport", wiki="", img="", isAirport=True, isFlight=False, destination="", dep_date="", ret_date="", price=0 )
+	graph.add_node(0, location=(latit, longit), title=initial_airport, desc="Airport", wiki="", img="", isAirport=True, isFlight=False, destination="",  airport_name="", dep_date="", ret_date="", price=0 )
 
 	lat_long = []
 	lat_long.append((latit, longit))
@@ -70,7 +64,7 @@ def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit
 		if res.location.longitude > maxx:
 			maxx = res.location.longitude
 
-		graph.add_node(ind+1 , location=lat_long[-1], title=res.title, desc=res.details.short_description, wiki=res.details.wiki_page_link, img=res.main_image, isAirport=False,isFlight=False, destination="", dep_date="", ret_date="", price=0 )
+		graph.add_node(ind+1 , location=lat_long[-1], title=res.title, desc=res.details.short_description, wiki=res.details.wiki_page_link, img=res.main_image, isAirport=False,isFlight=False, destination="",  airport_name="", dep_date="", ret_date="", price=0 )
 	print(minx, maxx, miny, maxy)
 	# Add the edges
 	edges = []
@@ -87,11 +81,11 @@ def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit
 				minind = j
 				mind = d
 
-	
-	
+
+
 	edges.sort(key=lambda x: x[2])
 	edges.insert(0, (0, minind, mind))
-	
+
 
 	for ind, edge in enumerate(edges):
 		nodes = checkDegree(graph)
@@ -110,6 +104,9 @@ def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit
 						notInLocation = False
 						break
 
+
+
+
 			if not fail or not added_edges:
 				added_edges.append(edge)
 				graph.add_edge(edge[0], edge[1], distance=edge[2], isFlight=False)
@@ -124,22 +121,17 @@ def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit
 	dest = Next_Desitination()
 	flight_tuples = dest.getLocations(airport_code)
 	start = graph.number_of_nodes()
-
 	for ix, f in enumerate(flight_tuples):
-		
-		try:
-			graph.add_node(start + ix, isFlight=True, wiki="", img="", destination=f[1], location=(f[2], f[3]), title=f[4], desc="Airport", dep_date=f[5], ret_date=f[6], price=f[7] )
-			graph.add_edge(0, start+ix, isFlight=True)
-		except Exception as e:
-			continue
+		graph.add_node(start + ix, isFlight=True, wiki="", img="", destination=f[1], location=(f[2], f[3]), title=f[4], desc="Airport", dep_date=f[5], ret_date=f[6], price=f[7] )
+		graph.add_edge(0, start+ix, isFlight=True)
 
 
 	data = json_graph.node_link_data(graph)
-	
+
 	# with open('test_json.txt', 'w') as f:
 	# 				f.write(str(data))
-	
+
 	return data
 	#nx.draw(graph)
-	
+
 #genGraph()
