@@ -25,10 +25,10 @@ function Initialize(): void {
   ];
 
   var edges = [
-    new Edge(cities[0], cities[1]),
-    new Edge(cities[1], cities[2]),
-    new Edge(cities[2], cities[3]),
-    new Edge(cities[3], cities[0]),
+    new AEdge(cities[0], cities[1]),
+    new AEdge(cities[1], cities[2]),
+    new AEdge(cities[2], cities[3]),
+    new AEdge(cities[3], cities[0]),
   ];
 
   let cg = new CityGraph();
@@ -87,7 +87,7 @@ function Update(): void {
   if(dist == 0) { 
     let inputAngle = GetInputDirection();
     if(inputAngle == null) return; // User hasn't pressed anything
-    let e : Edge = latestCity.GetBestEdge(closestNode as ANode, inputAngle); // Get most likely edge
+    let e : AEdge = latestCity.GetBestEdge(closestNode as ANode, inputAngle); // Get most likely edge
     
     // Set the pacman path
     pacman.fromNode = closestNode as ANode;
