@@ -21,3 +21,11 @@ function insertAfter(newNode : HTMLElement, referenceNode : HTMLElement) {
       p.insertBefore(newNode, referenceNode.nextSibling);
     }
 }
+
+// Distance using lat/long isn't really euclidean...
+function Distance(latLng1: any, latLng2: any) {
+    return Math.sqrt(
+        (latLng1.lat - latLng2.lat)**2 +
+        (latLng1.lng - latLng2.lng)**2
+    )
+}
