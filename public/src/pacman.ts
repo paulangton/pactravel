@@ -3,7 +3,7 @@ import CityGraph from "./CityGraph";
 class Pacman {
   lat : number;
   long : number;
-  mouthState : boolean;
+  mouthState : number; // 0, 1, or 2
   fromNode : CityGraph.ANode;
   toNode : CityGraph.ANode;
 
