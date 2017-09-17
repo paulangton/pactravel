@@ -76,37 +76,38 @@ class Pacman {
   draw(map: any) {
     let iconBase : String = './resources/';
     let icons = [
-      {
-        path: iconBase + 'pacman0.png'
-      },
-      {
-        path: iconBase + 'pacman1.png'
-      },
-      {
-        path: iconBase + 'pacman2.png'
-      }
+      iconBase + 'pacman0.png',
+      iconBase + 'pacman1.png',
+      iconBase + 'pacman2.png'
     ];
 
-    var image = {
-      path: "resources/pacman0.png",
+    let image = {
+      url: icons[this.renderState],
       // This marker is 20 pixels wide by 32 pixels high.
-      // size: new google.maps.Size(32, 32),
-      // // The origin for this image is (0, 0).
-      // origin: new google.maps.Point(0, 0),
-      // // The anchor for this image is the base of the flagpole at (0, 32).
-      // anchor: new google.maps.Point(16, 16)
+      size: new google.maps.Size(256, 230),
+      // The origin for this image is (0, 0).
+      origin: new google.maps.Point(0, 0),
+      // The anchor for this image is the base of the flagpole at (0, 32).
+      anchor: new google.maps.Point(15, 15),
+      scaledSize: new google.maps.Size(30, 30)
     };
 
     if (!this.marker) {
       this.marker = new google.maps.Marker({
         position: { lat: this.lat, lng: this.long },
         map: map,
-        icon: image,
+        icon: icons[this.renderState],
         zIndex: 1
       });
     }
     this.marker.setPosition(new google.maps.LatLng(this.lat, this.long));
-    this.renderState += 1;
+    this.marker.setIcon(image);
+    if (this.renderState >= 2) {
+      this.renderState = 0;
+    }
+    else {
+      this.renderState += 1;
+    }
   }
 
 
