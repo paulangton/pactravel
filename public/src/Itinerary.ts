@@ -20,17 +20,23 @@ class Itinerary {
   }
 
   // Add to itinerary
-  visit(e: Experience): void {
+  visit(exp: any): void {
     let itineraryDiv = document.getElementById("itinerary");
     let itineraryPad = document.getElementById("itinerary-pad");
     if (itineraryDiv == null) throw Error("Itinerary div doesn't exist!");
 
-    if (e instanceof TestExperience) {
-      let testDiv = document.createElement('div');
-      testDiv.innerHTML = 'Test Experience!';
-      itineraryDiv.insertBefore(testDiv, itineraryPad);
-      testDiv.classList.toggle('fade');
+    let newDiv = document.createElement('div');
+    if (exp instanceof TestExperience) {
+      newDiv.innerHTML = 'Test Experience!';
+    } else if (exp instanceof AttractionNode) {
+      newDiv.innerHTML = '\t- Visited ' + exp.data.title;
+    } else if (exp instanceof InterCityEdge) {
+      newDiv.innerHTML = '<h3>Flight from ' + exp.data.from + ' to ' + exp.data.to + '</h3><span><i>Cost: ' + exp.cost + ' Duration: ' + exp.time + '</i></span>';
+    } else {
+      return;
     }
+    itineraryDiv.insertBefore(newDiv, itineraryPad);
+
     itineraryDiv.scrollTop = itineraryDiv.scrollHeight - itineraryDiv.clientHeight;
     return;
 
