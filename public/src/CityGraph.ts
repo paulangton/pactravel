@@ -1,14 +1,13 @@
-
-
+// To represent a city graph
 class CityGraph {
-    
+
     Nodes : ANode[] = [];
     Edges : AEdge[] = [];
-    
+
     GetBestEdge(node : ANode, angle: number) : AEdge {
         return this.Edges[0];
     }
-    
+
     draw(map : any) {
         for(let e of this.Edges) {
             var path = new google.maps.Polyline({
@@ -20,7 +19,7 @@ class CityGraph {
                 strokeOpacity: 1.0,
                 strokeWeight: 2
             });
-            
+
             path.setMap(map);
         }
         for(let n of this.Nodes) {
@@ -36,12 +35,12 @@ class CityGraph {
             });
         }
     }
-    
-    
+
+
 }
 
 class Experience {
-    
+
 }
 
 class ANode extends Experience {
@@ -53,13 +52,15 @@ class ANode extends Experience {
     description : String;
     visited : boolean;
     hasCherry : boolean;
-    
-    constructor(lat : number, long : number, name : String, description? : String, hasCherry? : boolean, city? : String) {
+
+    constructor(lat : number, long : number, name? : String, description? : String, hasCherry? : boolean, city? : String) {
         super();
         this.lat = lat;
         this.long = long;
         this.visited = false;
-        this.name = name;
+        if (name) {
+          this.name = name;
+        }
         if (hasCherry) {
             this.hasCherry = hasCherry;
         }
@@ -73,33 +74,33 @@ class ANode extends Experience {
             this.description = description;
         }
     }
-    
+
     visit() : void {
         this.visited = true;
     }
-    
+
     // draws a node
     draw() : void {
         if (this.hasCherry && !this.visited) {
             // drop a cherry
         }
-        
+
     }
 }
 
 class TravelNode extends ANode {
-    
+
 }
 
 class AttractionNode extends ANode {
-    
+
 }
 
 class AEdge extends Experience {
     a : ANode;
     b : ANode;
     data : any;
-    
+
     constructor(a : ANode, b : ANode) {
         super();
         this.a = a;
@@ -112,15 +113,21 @@ class InterCityEdge extends AEdge {
     transportType : String;
     cost : number;
     time : number; // in hours
-    
-    constructor(a : ANode, b : ANode, transportType : String, cost : number, time : number) {
+
+    constructor(a : ANode, b : ANode, transportType? : String, cost? : number, time? : number) {
         super(a, b);
-        this.transportType = transportType;
-        this.cost = cost;
-        this.time = time;
+        if (transportType) {
+          this.transportType = transportType;
+        }
+        if (cost) {
+          this.cost = cost;
+        }
+        if (time) {
+          this.time = time;
+        }
     }
 }
 
 class IntraCityEdge extends AEdge {
-    
+
 }

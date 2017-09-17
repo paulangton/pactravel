@@ -157,7 +157,7 @@ function GetCityGraphFromServerGraph(serverGraph : any) : CityGraph {
     newNode.data = n;
     cg.Nodes.push(newNode);
   }
-  
+
   for(let e of serverGraph.links) {
     let newEdge : AEdge;
     if(e.isFlight) {
