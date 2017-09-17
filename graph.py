@@ -6,7 +6,10 @@ from pprint import pprint
 import networkx as nx 
 from networkx.readwrite import json_graph
 #import matplotlib
-
+def calculateIntersectionPoint(x1, y1, x2, y2, x3, y3, x4, y4):
+	x = (x1*y2 - y1*x2)*(x3-x4)-(x1-x2)*(x3*y4 - x4*y3) / ((x1 - x2)*(y3-y4) - (y1-y2)*(x3-x4))
+	y = (x1*y2 - y1*x2)*(y3-y4)-(y1-y2)*(x3*y4 - x4*y3) / ((x1 - x2)*(y3-y4) - (y1-y2)*(x3-x4))
+	return (x,y)
 
 def checkDegree(graph):
 	degs = nx.degree(graph)
@@ -39,19 +42,33 @@ def api_call(latitude=42.3656132, longitude=-71.00956020000001, category="Museum
 		return []
 
 def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit=42.3656132, longit=-71.00956020000001 ):
-	graph = nx.DiGraph()
+	graph = nx.Graph()
 	print("YEAH BOI\n")
 	poi = api_call(latitude=latit, longitude=longit, number_of_results=number_of_results)
 	graph.add_node(0, location=(latit, longit), title=initial_airport, desc="Airport", wiki="", img="", isAirport=True)
+
 	lat_long = []
 	lat_long.append((latit, longit))
+	miny = latit
+	maxy = latit
+	minx = longit
+	maxx = longit
 	for ind, res in enumerate(poi):
 		lat_long.append([res.location.latitude, res.location.longitude])
+		if res.location.latitude < miny:
+			miny = res.location.latitude
+		if res.location.latitude > maxy:
+			maxy = res.location.latitude
+		if res.location.longitude < minx:
+			minx = res.location.longitude
+		if res.location.longitude > maxx:
+			maxx = res.location.longitude
 
 		graph.add_node(ind+1 , location=lat_long[-1], title=res.title, desc=res.details.short_description, wiki=res.details.wiki_page_link, img=res.main_image, isAirport=False)
 
 	# Add the edges
 	edges = []
+	added_edges = []
 	print(len(lat_long) == len(poi) + 1)
 	for i in range(len(poi)):
 		for j in range(i + 1,len(poi)):
@@ -64,12 +81,19 @@ def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit
 		if not nodes:
 			break
 		if edge[0] in nodes and edge[1] in nodes:
-			graph.add_edge(edge[0], edge[1], distance=edge[2])
+			fail = True
+			for e in added_edges:
+				intersection = calculateIntersectionPoint(lat_long[edge[0]][1], lat_long[edge[0]][0], lat_long[edge[1]][1], lat_long[edge[1]][0], lat_long[e[0]][1], lat_long[e[0]][0], lat_long[e[1]][1], lat_long[e[1]][0])
+				if intersection[0] <= maxx and intersection[0] >= minx and intersection[1] >= miny and intersection[1] <= maxy:
+					fail = False
+			if not fail:
+				added_edges.append(edge)
+				graph.add_edge(edge[0], edge[1], distance=edge[2])
 
 	# Put edges in one by one until cannot
 
 	data = json_graph.node_link_data(graph)
-	print("FINALE\n")
+	
 	return data
 	#nx.draw(graph)
 	"""
