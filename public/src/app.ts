@@ -33,7 +33,7 @@ function Initialize(): void {
   console.log(cg2);
 
   itinerary = new Itinerary();
-  
+
   OnFlight(null);
 
   setInterval(Update, 100);
@@ -89,14 +89,21 @@ function OnFlight(newCity: any) {
   let query = {
     lat: 0,
     long: 0,
-    name: ""
+    name: "hii"
   }
-  var myRequest = new Request('http://localhost/poi?latitude=' + query.lat + '&longitude=' + query.long + '&airport_name=' + query.name);
+  var myRequest = new Request('http://127.0.0.1:5000/poi?latitude=' + query.lat + '&longitude=' + query.long + '&airport_name=' + query.name);
 
   console.log(myRequest.url);
-  fetch(myRequest).then(function(res) {
+  fetch(myRequest)
+  .then(function (res) {
+    if (res.status == 200) return res.json();
+    else throw new Error('Something went wrong on api server!');
+  })
+  .then(function(res) {
     console.log(res);
-  }).catch(function(err) {
+    OnCityLoad(GetCityGraphFromServerGraph(res));
+  })
+  .catch(function (err) {
     console.log(err);
   });
 }
