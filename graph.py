@@ -17,13 +17,11 @@ def checkDegree():
 
 	return availableNodes
 
-def api_call(category="Museum"):
+def api_call(latitude=42.3656132, longitude=-71.00956020000001, category="Museum", number_of_results=15):
 
 	# create an instance of the API class
 	api_instance = swagger_client.DefaultApi()
 	apikey = 'VmaGyJA9nrXVyRtW5Dyx5tykZi4NGhlS' # str | API Key provided for your account, to identify you for API access. Make sure to keep this API key secret.
-	latitude = 42.3656132 # float | Latitude of the center of the search, in decimal degrees (default to 35.1504)
-	longitude = -71.00956020000001 # float | Longitude of the center of the search, in decimal degrees (default to -114.57632)
 	radius = 42 # int | Radius around the center to look for points-of-interest around the given latitude and longitude in kilometers (km) (default to 42)
 	lang = 'EN' # str | The preferred language of the content related to each point of interest. Content will be returned in this language if available (optional) (default to EN)
 	category = 'Museum' # str | Filters the resulting points_of_interest to include only results which have a least one category containing the given provided word. Good examples are <em>museum</em>, <em>landmark</em> or <em>church</em> (optional) (default to Museum)
@@ -41,21 +39,21 @@ def api_call(category="Museum"):
 		print("Exception when calling DefaultApi->yap_q_city_name_search: %s\n" % e)
 		return []
 
-def genGraph(number_of_results=10):
+def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit=42.3656132, longit=-71.00956020000001 ):
 	
 
-	poi = api_call()
-	graph.add_node(0, location=(42.3656132,-71.00956020000001), title="Boston Logan Airport", desc="Airport", wiki="", img="")
+	poi = api_call(latitude=latit, longitude=longit, number_of_results=number_of_results)
+	graph.add_node(0, location=(latit, longit), title=initial_airport, desc="Airport", wiki="", img="", isAirport=True)
 	lat_long = []
-	lat_long.append((42.3656132,-71.00956020000001))
+	lat_long.append((latit, longit))
 	for ind, res in enumerate(poi):
 		lat_long.append([res.location.latitude, res.location.longitude])
 
-		graph.add_node(ind, location=lat_long[-1], title=res.title, desc=res.details.short_description, wiki=res.details.wiki_page_link, img=res.main_image)
+		graph.add_node(ind+1 , location=lat_long[-1], title=res.title, desc=res.details.short_description, wiki=res.details.wiki_page_link, img=res.main_image, isAirport=False)
 
 	# Add the edges
 	edges = []
-	print(len(poi))
+	print(len(lat_long) == len(poi) + 1)
 	for i in range(len(poi)):
 		for j in range(i + 1,len(poi)):
 			edges.append((i, j, ((lat_long[i][0] - lat_long[j][0]) ** 2  + (lat_long[i][1] - lat_long[j][1])** 2) ** 0.5))
