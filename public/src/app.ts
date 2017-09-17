@@ -1,7 +1,12 @@
-console.log("Hello");
+console.log("Hello!");
 
 declare var google: any;
-var map :any;
+
+var paused: boolean = true;
+
+var map : any;
+var latestCity : CityGraph;
+var visitedCities : CityGraph[];
 
 function Initialize() : void {
   map = new google.maps.Map(document.getElementById('map'), {
@@ -60,6 +65,10 @@ function OnClick(event : any, counter = 10) {
 
 function Update() : void {
   
+  if(paused) return;
+  
+  
+  
 }
 
 function OnFlight(newCity : any) {
@@ -68,6 +77,24 @@ function OnFlight(newCity : any) {
 
 // 
 function OnCityLoad(newCityGraph: any) : void {
+  latestCity = newCityGraph;
+  visitedCities.push(newCityGraph);
   
+  latestCity.draw(map);
 }
 
+var keys : any = [];
+window.onkeyup = function(e) {keys[e.keyCode]=false;}
+window.onkeydown = function(e) {keys[e.keyCode]=true;}
+
+function GetInputDirection() {
+  let isUp = keys[38] || keys[87] || false;
+  let isDown = keys[40] || keys[83] || false;
+  let isLeft = keys[37] || keys[65] || false;
+  let isRight = keys[39] || keys[68] || false;
+  
+  // bOoLEAnS aDD As NuMBerSsSSs!?!
+  let vertical = isUp - isDown;
+  let horizontal = isRight - isLeft;
+  
+}
