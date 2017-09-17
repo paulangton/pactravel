@@ -87,9 +87,10 @@ function OnFlight(newCity: any) {
   let query = {
     lat: 0,
     long: 0,
-    name: "hii"
+    air_name: "Boston Logan Airport",
+    air_code: "BOS",
   }
-  var myRequest = new Request('http://127.0.0.1:5000/poi?latitude=' + query.lat + '&longitude=' + query.long + '&airport_name=' + query.name);
+  var myRequest = new Request('http://127.0.0.1:5000/poi?latitude=' + query.lat + '&longitude=' + query.long + '&airport_name=' + query.air_name + '&airport_code=' + query.air_code);
 
   console.log(myRequest.url);
   fetch(myRequest)
