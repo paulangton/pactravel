@@ -24,12 +24,13 @@ class CityGraph {
 
     draw(map: any) {
         for (let e of this.Edges) {
+            let col = (e instanceof InterCityEdge) ? '#FF0000' : '#00E5EE';
             var path = new google.maps.Polyline({
                 path: [
                     { lat: e.a.lat, lng: e.a.long },
                     { lat: e.b.lat, lng: e.b.long }
                 ],
-                strokeColor: '#FF0000',
+                strokeColor: col,
                 strokeOpacity: 1.0,
                 strokeWeight: 2
             });
@@ -37,11 +38,12 @@ class CityGraph {
             path.setMap(map);
         }
         for (let n of this.Nodes) {
+            let col = (n instanceof TravelNode) ? '#FF0000' : '#00E5EE';
             var cityCircle = new google.maps.Circle({
-                strokeColor: '#FF0000',
+                strokeColor: col,
                 strokeOpacity: 0.8,
                 strokeWeight: 2,
-                fillColor: '#FF0000',
+                fillColor: col,
                 fillOpacity: 0.35,
                 map: map,
                 center: { lat: n.lat, lng: n.long },
