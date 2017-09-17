@@ -45,7 +45,7 @@ def api_call(latitude=42.3656132, longitude=-71.00956020000001, category="Museum
 def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit=42.3656132, longit=-71.00956020000001, airport_code="BOS" ):
 	graph = nx.Graph()
 	poi = api_call(latitude=latit, longitude=longit, number_of_results=number_of_results)
-	graph.add_node(0, location=(latit, longit), title=initial_airport, desc="Airport", wiki="", img="", isAirport=True, isFlight=False, destination="", airport_name="", dep_date="", ret_date="", price=0)
+	graph.add_node(0, location=(latit, longit), title=initial_airport, desc="Airport", wiki="", img="", isAirport=True, isFlight=False, destination="",  airport_name="", dep_date="", ret_date="", price=0 )
 
 	lat_long = []
 	lat_long.append((latit, longit))
@@ -64,7 +64,7 @@ def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit
 		if res.location.longitude > maxx:
 			maxx = res.location.longitude
 
-		graph.add_node(ind+1 , location=lat_long[-1], title=res.title, desc=res.details.short_description, wiki=res.details.wiki_page_link, img=res.main_image, isAirport=False, isFlight=False,  destination="", airport_name="", dep_date="", ret_date="", price=0)
+		graph.add_node(ind+1 , location=lat_long[-1], title=res.title, desc=res.details.short_description, wiki=res.details.wiki_page_link, img=res.main_image, isAirport=False,isFlight=False, destination="",  airport_name="", dep_date="", ret_date="", price=0 )
 	print(minx, maxx, miny, maxy)
 	# Add the edges
 	edges = []
@@ -109,7 +109,7 @@ def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit
 
 			if not fail or not added_edges:
 				added_edges.append(edge)
-				graph.add_edge(edge[0], edge[1], distance=edge[2])
+				graph.add_edge(edge[0], edge[1], distance=edge[2], isFlight=False)
 
 	# Put edges in one by one until cannot
 	# Add in flight edges
@@ -117,8 +117,8 @@ def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit
 	flight_tuples = dest.getLocations(airport_code)
 
 	for ix, f in enumerate(flight_tuples):
-		graph.add_node(1337+ ix)
-		graph.add_edge(0, 1337+ix, isFlight=True, destination=f[1], location=(f[2], f[3]), airport_name=f[4], dep_date=f[5], ret_date=f[6], price=f[7] )
+		graph.add_node(1337+ ix, isFlight=True, wiki="", img="", destination=f[1], location=(f[2], f[3]), title=f[4], desc="Airport", dep_date=f[5], ret_date=f[6], price=f[7] )
+		graph.add_edge(0, 1337+ix, isFlight=True)
 
 
 	data = json_graph.node_link_data(graph)
