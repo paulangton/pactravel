@@ -113,19 +113,10 @@ def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit
 
 	data = json_graph.node_link_data(graph)
 	
-<<<<<<< HEAD
-	# with open('test_json.txt', 'w') as f:
-	# 	f.write(str(data))
-=======
 	"""with open('test_json.txt', 'w') as f:
 					f.write(str(data))"""
->>>>>>> master
 	
 	return data
 	#nx.draw(graph)
 	
-<<<<<<< HEAD
-# genGraph()
-=======
 #genGraph()
->>>>>>> master
