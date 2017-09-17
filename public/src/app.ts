@@ -70,7 +70,7 @@ function Update(): void {
   let pacMovement = .001;
 
   pacman.move(pacMovement);
-  pacman.draw()
+  pacman.draw(map);
   console.log(pacman.lat);
 
 }
