@@ -127,12 +127,12 @@ def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit
 	start = graph.number_of_nodes()
 
 	for ix, f in enumerate(flight_tuples):
-		
-		try:
-			graph.add_node(start + ix, isFlight=True, wiki="", img="", destination=f[1], location=(f[2], f[3]), title=f[4], desc="Airport", dep_date=f[5], ret_date=f[6], price=f[7] )
-			graph.add_edge(0, start+ix, isFlight=True)
-		except Exception as e:
-			continue
+		if f not None:
+			try:
+				graph.add_node(start + ix, isFlight=True, wiki="", img="", destination=f[1], location=(f[2], f[3]), title=f[4], desc="Airport", dep_date=f[5], ret_date=f[6], price=f[7])
+				graph.add_edge(0, start+ix, isFlight=True)
+			except Exception as e:
+				continue
 
 
 	data = json_graph.node_link_data(graph)
