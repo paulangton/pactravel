@@ -1,4 +1,4 @@
-
+// gets pixel coordinates
 function PixelCoords(map: any, latLong : any) : number[] {
     var scale = Math.pow(2, map.getZoom());
     var nw = new google.maps.LatLng(
