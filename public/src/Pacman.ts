@@ -39,11 +39,10 @@ class Pacman {
   // returns a minimum distance (speed) for pacman to move in order to complete
   // the path in n time steps
   move(n: number): void {
-    let speed: number = Math.sqrt(Math.pow(this.toNode.lat - this.fromNode.lat, 2) + Math.pow(this.toNode.long - this.fromNode.long, 2)) / n;
-    speed = n;
+    let speed = n;
     let latDif: number = this.toNode.lat - this.lat;
     let longDif: number = this.toNode.long - this.long;
-    let direction = Math.atan(latDif / longDif); // in radians
+    let direction = Math.atan2(latDif, longDif); // in radians
     console.log(direction);
 
     if (latDif > 0) {
@@ -53,19 +52,19 @@ class Pacman {
       }
     }
     else {
-      this.lat -= speed * Math.sin(direction);
+      this.lat += speed * Math.sin(direction);
       if (this.lat < this.toNode.lat) {
         this.lat = this.toNode.lat;
       }
     }
     if (longDif > 0) {
-      this.long += speed * Math.cos(direction);
+      this.long -= speed * Math.cos(direction);
       if (this.long > this.toNode.long) {
         this.long = this.toNode.long;
       }
     }
     else {
-      this.long -= speed * Math.cos(direction);
+      this.long += speed * Math.cos(direction);
       if (this.long < this.toNode.long) {
         this.long = this.toNode.long;
       }

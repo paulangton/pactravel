@@ -4,8 +4,22 @@ class CityGraph {
     Nodes: ANode[] = [];
     Edges: AEdge[] = [];
 
+    // return edge whose angle from east corresponds most closely with the input angle
     GetBestEdge(node: ANode, angle: number): AEdge {
-        return this.Edges[0];
+        let bestEdge = this.Edges[0];
+        console.log(this.Edges[0]);
+        for(let e of this.Edges) {
+          if (e.a == node || e.b == node) {
+            let curBestAngle : number = Math.abs(bestEdge.getAngleFromEast(node) - angle);
+            let nextAngle : number = Math.abs(e.getAngleFromEast(node) - angle)
+            if (curBestAngle > nextAngle) {
+              bestEdge = e
+            }
+          }
+        }
+        console.log("input angle: " + angle)
+        console.log(bestEdge);
+        return bestEdge;
     }
 
     draw(map: any) {
@@ -109,6 +123,30 @@ class AEdge extends Experience {
         super();
         this.a = a;
         this.b = b;
+    }
+
+    getAngleFromEast(startNode : ANode) {
+      let latDif: number;
+      let longDif: number;
+      if (startNode == this.a) {
+        latDif = this.b.lat - this.a.lat
+        longDif = this.b.long - this.a.long
+
+      }
+      else if (startNode == this.b) {
+        latDif = this.a.lat - this.b.lat
+        longDif = this.a.long - this.b.long
+
+      }
+      else {
+
+        console.log("Something went very wrong here!")
+        console.log(this.a);
+        console.log(this.b);
+        return 0;
+      }
+      // in radians
+      return Math.atan2(latDif, longDif);
     }
 }
 
