@@ -1,0 +1,76 @@
+{'categories': ['1912 establishments in Massachusetts',
+                'American Football League (1926) venues',
+                'American Football League (1936) venues',
+                'American Football League (1940) venues',
+                'American Football League venues',
+                'American football venues in Massachusetts',
+                'Baseball venues in Massachusetts',
+                'Boston Braves stadiums',
+                'Boston College Eagles football venues',
+                'Boston Patriots (AFL) stadiums',
+                'Buildings and structures on the National Register of Historic '
+                'Places in Massachusetts',
+                'Defunct National Football League venues',
+                'Fenway Park',
+                'Fenway\\u2013Kenmore',
+                'Jewel Box parks',
+                'Landmarks in Fenway\\u2013Kenmore',
+                'Major League Baseball venues',
+                'National Register of Historic Places in Boston, Massachusetts',
+                'North American Soccer League (1968\\u201384) stadiums',
+                'Outdoor ice hockey venues in the United States',
+                'Soccer venues in Massachusetts',
+                'Sports venues completed in 1912',
+                'Sports venues in Boston, Massachusetts',
+                'Washington Redskins stadiums'],
+ 'contextual_images': None,
+ 'details': {'description': 'Fenway Park is a baseball park in Boston, '
+                            'Massachusetts, located at 4 Yawkey Way near '
+                            'Kenmore Square. It has been the home of the '
+                            'Boston Red Sox Major League Baseball team since '
+                            'it opened in 1912 and it is the oldest ballpark '
+                            'in MLB.\n'
+                            'Because of its age and constrained location in '
+                            "Boston's dense Fenway–Kenmore neighborhood, the "
+                            'park has been renovated or expanded many times, '
+                            'resulting in quirky features including "The '
+                            'Triangle" , "Pesky\'s Pole", and the Green '
+                            'Monster in left field. It is the fourth smallest '
+                            'among MLB ballparks by seating capacity, second '
+                            'smallest by total capacity, and one of eight that '
+                            'cannot accommodate at least 40,000 spectators.\n'
+                            'Fenway has hosted the World Series ten times, '
+                            'with the Red Sox winning five of them, and the '
+                            "Braves  winning one. The first, in the park's "
+                            'inaugural season, was the 1912 World Series and '
+                            'the most recent was the 2013 World Series. Beside '
+                            'baseball games it has been the site of many other '
+                            'sporting and cultural events including '
+                            'professional football games for the Boston '
+                            'Redskins, Boston Yanks, and the Boston Patriots; '
+                            'concerts; soccer and hockey games; and political '
+                            'and religious campaigns.\n'
+                            "April 20, 2012, marked Fenway Park's centennial. "
+                            'On March 7 of that year, the park was added to '
+                            'the National Register of Historic Places.\n'
+                            'Former pitcher Bill Lee has called Fenway Park "a '
+                            'shrine". Today, the park is considered to be one '
+                            'of the most well-known sports venues in the '
+                            'world.\n'
+                            'In March 2012, jetBlue Park at Fenway South was '
+                            "opened as the Boston Red Sox's spring training "
+                            'base. This new park in Fort Myers, Florida has a '
+                            'field with exactly the same dimensions as Fenway '
+                            'Park in Boston.',
+             'short_description': 'Fenway Park is a baseball park in Boston, '
+                                  'Massachusetts, located at 4 Yawkey Way near '
+                                  'Kenmore Square.',
+             'wiki_page_link': 'https://en.wikipedia.org/wiki/Fenway Park'},
+ 'geoname_id': 6618682,
+ 'grades': {'city_grade': 0, 'yapq_grade': 5},
+ 'location': {'google_maps_link': 'http://maps.google.com?q=42.3464,-71.0975',
+              'latitude': 42.3464,
+              'longitude': -71.0975},
+ 'main_image': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Fenway_from_Legend%27s_Box.jpg/400px-Fenway_from_Legend%27s_Box.jpg',
+ 'title': 'Fenway Park',
+ 'walk_time': None}
