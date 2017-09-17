@@ -1,11 +1,10 @@
-import CityGraph from "./CityGraph";
 
 class Pacman {
   lat : number;
   long : number;
   mouthState : boolean;
-  fromNode : CityGraph.ANode;
-  toNode : CityGraph.ANode;
+  fromNode : ANode;
+  toNode : ANode;
 
   // Reverses pacman's direction
   rev() : void {
