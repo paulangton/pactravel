@@ -1,11 +1,11 @@
-from CityGraph import *;
+import CityGraph from "./CityGraph";
 
 class Pacman {
   lat : number;
-  lng : number;
+  long : number;
   mouthState : boolean;
-  fromNode : ANode;
-  toNode : ANode;
+  fromNode : CityGraph.ANode;
+  toNode : CityGraph.ANode;
 
   // Reverses pacman's direction
   rev() : void {
@@ -17,21 +17,21 @@ class Pacman {
   // returns a minimum distance (speed) for pacman to move in order to complete
   // the path in n time steps
   move(n : number) : void {
-    let speed : number = Math.sqrt(Math.pow(this.toNode.lat - this.fromNode.lat, 2) + Math.pow(this.toNode.lng - this.fromNode.lng, 2)) / n;
+    let speed : number = Math.sqrt(Math.pow(this.toNode.lat - this.fromNode.lat, 2) + Math.pow(this.toNode.long - this.fromNode.long, 2)) / n;
     let latDif : number = this.toNode.lat - this.lat;
-    let lngDif : number = this.toNode.lng - this.lng;
-    let direction = Math.atan(latDif/lngDif); // in radians
+    let longDif : number = this.toNode.long - this.long;
+    let direction = Math.atan(latDif/longDif); // in radians
     if (latDif > 0) {
       this.lat += speed * Math.cos(direction);
     }
     else {
       this.lat -= speed * Math.cos(direction);
     }
-    if (lngDif > 0) {
-      this.lng += speed * Math.sin(direction);
+    if (longDif > 0) {
+      this.long += speed * Math.sin(direction);
     }
     else{
-      this.lng -= speed * Math.sin(direction);
+      this.long -= speed * Math.sin(direction);
     }
   }
 
