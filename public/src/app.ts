@@ -18,16 +18,16 @@ function Initialize(): void {
     mapTypeId: 'terrain'
   });
 
-  let cg2 = GetCityGraphFromServerGraph(JSON.parse(example));
-  // OnCityLoad(cg2);
+  // let cg2 = GetCityGraphFromServerGraph(JSON.parse(example));
+  // // OnCityLoad(cg2);
 
-  let edge = cg2.Edges[0];
-  pacman = new Pacman(
-    edge.a.lat,
-    edge.a.long,
-    edge.a,
-    edge.b
-  );
+  // let edge = cg2.Edges[0];
+  // pacman = new Pacman(
+  //   edge.a.lat,
+  //   edge.a.long,
+  //   edge.a,
+  //   edge.b
+  // );
   pacman = new Pacman(0, 0, new ANode(0, 0), new ANode(0, 0));
   itinerary = new Itinerary();
 
@@ -73,7 +73,7 @@ function Update(): void {
 
     // Set the pacman path
     let newPathNode = (e.a == closestNode) ? e.b : e.a;
-    //pacman.turn(newPathNode)
+    pacman.turn(newPathNode)
   }
 
   let pacMovement = .001;
@@ -117,6 +117,7 @@ function OnDoneFlying() {
   pacman.toNode = latestCity.Edges[0].b;
   pacman.lat = latestCity.Edges[0].a.lat;
   pacman.long = latestCity.Edges[0].a.long;
+  pacman.draw(map);
 }
 
 //
