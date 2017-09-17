@@ -11,7 +11,7 @@ class Next_Desitination(object):
     def __init__(self):
         # create an instance of the API class
         self.api_instance = swagger_client.DefaultApi()
-        self.apikey = 'xe3IjAFO8GO5UqpQVe4kpzfjHxl4ERtz' 
+        self.apikey = 'eLVAr118T0kPOfYAoIy3RYjvYgH0Gygt' 
         self.iso = loadIso()
 
     def getLocations(self, origin):
@@ -20,7 +20,7 @@ class Next_Desitination(object):
         tmr = datetime.datetime.now() + datetime.timedelta(days=1)
         departure_date = tmr.strftime("%Y-%m-%d")
 
-        try: 
+        try:
             api_response = self.api_instance.flight_inspiration_search(self.apikey, origin, departure_date=departure_date, one_way=True, direct=True)
 
             result = []
