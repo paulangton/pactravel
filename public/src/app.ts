@@ -12,9 +12,6 @@ var latestCity: CityGraph;
 var visitedCities: CityGraph[] = [];
 
 function Initialize(): void {
-  setInterval(function() {
-    console.log(GetInputDirection());
-  }, 10);
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 10,
     center: { lat: 42.356327, lng: -71.060237 },
@@ -31,14 +28,10 @@ function Initialize(): void {
     edge.a,
     edge.b
   );
-  pacman.draw(map);
-  console.log(pacman);
-  console.log(cg2);
-
+  pacman = new Pacman(0, 0, new ANode(0, 0), new ANode(0, 0));
   itinerary = new Itinerary();
 
   OnFlight(null);
-  OnDoneFlying();
 
   setInterval(Update, 100);
 }
@@ -119,6 +112,11 @@ function OnDoneFlying() {
   console.log(citySize);
   map.setCenter({lat: citySize[0], lng: citySize[1]});
   map.setZoom(Math.round(citySize[2] / 4.36));
+  
+  pacman.fromNode = latestCity.Edges[0].a;
+  pacman.toNode = latestCity.Edges[0].b;
+  pacman.lat = latestCity.Edges[0].a.lat;
+  pacman.long = latestCity.Edges[0].a.long;
 }
 
 //
