@@ -12,6 +12,9 @@ var latestCity: CityGraph;
 var visitedCities: CityGraph[] = [];
 
 function Initialize(): void {
+  setInterval(function() {
+    console.log(GetInputDirection());
+  }, 10);
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 10,
     center: { lat: 42.356327, lng: -71.060237 },
@@ -35,7 +38,7 @@ function Initialize(): void {
   itinerary = new Itinerary();
 
   OnFlight(null);
-  OnDoneFlying("Boston");
+  OnDoneFlying();
 
   setInterval(Update, 100);
 }
@@ -68,6 +71,8 @@ function Update(): void {
 
   // Pacman is paused at a node, waiting user input to go somewhere else
   if (dist == 0 && closestNode != pacman.fromNode) {
+    itinerary.visit(closestNode);
+
     let inputAngle = GetInputDirection();
     console.log("Input angle: " + inputAngle)
     if (inputAngle == null) return; // User hasn't pressed anything
@@ -145,7 +150,7 @@ function GetInputDirection() {
   if (isDown && isRight && !(isUp || isLeft)) return 7 * Math.PI / 4;
   if (isLeft && isDown && !(isUp || isRight)) return 5 * Math.PI / 4;
   if (isRight && isUp && !(isDown || isLeft)) return 1 * Math.PI / 4;
-  throw new Error("GetInputDirection failed!");
+  return null;
 }
 
 function GetCityGraphFromServerGraph(serverGraph: any): CityGraph {
