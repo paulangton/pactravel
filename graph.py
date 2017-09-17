@@ -8,9 +8,15 @@ from networkx.readwrite import json_graph
 from amadeus.next_location import Next_Desitination
 
 def calculateIntersectionPoint(x1, y1, x2, y2, x3, y3, x4, y4):
-	x = (x1*y2 - y1*x2)*(x3-x4)-(x1-x2)*(x3*y4 - x4*y3) / ((x1 - x2)*(y3-y4) - (y1-y2)*(x3-x4))
-	y = (x1*y2 - y1*x2)*(y3-y4)-(y1-y2)*(x3*y4 - x4*y3) / ((x1 - x2)*(y3-y4) - (y1-y2)*(x3-x4))
+	denom1 = ((x1 - x2)*(y3-y4) - (y1-y2)*(x3-x4))
+	denom2 = ((x1 - x2)*(y3-y4) - (y1-y2)*(x3-x4))
+	if denom1 == 0 or denom2 == 0:
+		return (x1, y1)
+	x = (x1*y2 - y1*x2)*(x3-x4)-(x1-x2)*(x3*y4 - x4*y3) / denom1
+	y = (x1*y2 - y1*x2)*(y3-y4)-(y1-y2)*(x3*y4 - x4*y3) / denom2
+	
 	return (x,y)
+
 
 def checkDegree(graph):
 	degs = nx.degree(graph)
@@ -25,7 +31,7 @@ def api_call(latitude=42.3656132, longitude=-71.00956020000001, category="Museum
 
 	# create an instance of the API class
 	api_instance = swagger_client.DefaultApi()
-	apikey = '5ZuuDhbYHXWkNpo7AKhxr6Ceb1aV4z3C' # str | API Key provided for your account, to identify you for API access. Make sure to keep this API key secret.
+	apikey = 'xe3IjAFO8GO5UqpQVe4kpzfjHxl4ERtz' # str | API Key provided for your account, to identify you for API access. Make sure to keep this API key secret.
 	radius = 42 # int | Radius around the center to look for points-of-interest around the given latitude and longitude in kilometers (km) (default to 42)
 	lang = 'EN' # str | The preferred language of the content related to each point of interest. Content will be returned in this language if available (optional) (default to EN)
 	category = 'Museum' # str | Filters the resulting points_of_interest to include only results which have a least one category containing the given provided word. Good examples are <em>museum</em>, <em>landmark</em> or <em>church</em> (optional) (default to Museum)
@@ -45,7 +51,7 @@ def api_call(latitude=42.3656132, longitude=-71.00956020000001, category="Museum
 def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit=42.3656132, longit=-71.00956020000001, airport_code="BOS" ):
 	graph = nx.Graph()
 	poi = api_call(latitude=latit, longitude=longit, number_of_results=number_of_results)
-	graph.add_node(0, location=(latit, longit), title=initial_airport, desc="Airport", wiki="", img="", isAirport=True, isFlight=False, destination="",  airport_name="", dep_date="", ret_date="", price=0 )
+	graph.add_node(0, location=(latit, longit), title=initial_airport, desc="Airport", wiki="", img="", isAirport=True, isFlight=False, destination="", dep_date="", ret_date="", price=0 )
 
 	lat_long = []
 	lat_long.append((latit, longit))
@@ -64,7 +70,7 @@ def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit
 		if res.location.longitude > maxx:
 			maxx = res.location.longitude
 
-		graph.add_node(ind+1 , location=lat_long[-1], title=res.title, desc=res.details.short_description, wiki=res.details.wiki_page_link, img=res.main_image, isAirport=False,isFlight=False, destination="",  airport_name="", dep_date="", ret_date="", price=0 )
+		graph.add_node(ind+1 , location=lat_long[-1], title=res.title, desc=res.details.short_description, wiki=res.details.wiki_page_link, img=res.main_image, isAirport=False,isFlight=False, destination="", dep_date="", ret_date="", price=0 )
 	print(minx, maxx, miny, maxy)
 	# Add the edges
 	edges = []
