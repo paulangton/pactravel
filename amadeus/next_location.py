@@ -11,7 +11,7 @@ class Next_Desitination(object):
     def __init__(self):
         # create an instance of the API class
         self.api_instance = swagger_client.DefaultApi()
-        self.apikey = 'VmaGyJA9nrXVyRtW5Dyx5tykZi4NGhlS' 
+        self.apikey = '5ZuuDhbYHXWkNpo7AKhxr6Ceb1aV4z3C' 
         self.iso = loadIso()
 
     def getLocations(self, origin):
@@ -24,10 +24,16 @@ class Next_Desitination(object):
             api_response = self.api_instance.flight_inspiration_search(self.apikey, origin, departure_date=departure_date, one_way=True, direct=True)
 
             result = []
-            for _, item in zip(range(10), api_response.results):
+            for _, item in zip(range(3), api_response.results):
+                r = self.api_instance.location_information(self.apikey, item.destination)
+                loc = r.airports[0].location
+                result.append((origin, item.destination, loc.latitude, loc.longitude, r.airports[0].city_name + " Airport", item.departure_date, item.return_date, item.price))
+                """
                 res = ExtremeSearchResult(item, self.iso).getDictRes()
                 if res:
                     result.append(res)
+                """
+
 
             return result
         except ApiException as e:

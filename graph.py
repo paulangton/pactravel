@@ -5,7 +5,8 @@ from swagger_client.rest import ApiException
 from pprint import pprint
 import networkx as nx 
 from networkx.readwrite import json_graph
-#import matplotlib
+from amadeus.next_location import Next_Desitination
+
 def calculateIntersectionPoint(x1, y1, x2, y2, x3, y3, x4, y4):
 	x = (x1*y2 - y1*x2)*(x3-x4)-(x1-x2)*(x3*y4 - x4*y3) / ((x1 - x2)*(y3-y4) - (y1-y2)*(x3-x4))
 	y = (x1*y2 - y1*x2)*(y3-y4)-(y1-y2)*(x3*y4 - x4*y3) / ((x1 - x2)*(y3-y4) - (y1-y2)*(x3-x4))
@@ -41,7 +42,7 @@ def api_call(latitude=42.3656132, longitude=-71.00956020000001, category="Museum
 		print("Exception when calling DefaultApi->yap_q_city_name_search: %s\n" % e)
 		return []
 
-def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit=42.3656132, longit=-71.00956020000001 ):
+def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit=42.3656132, longit=-71.00956020000001, airport_code="BOS" ):
 	graph = nx.Graph()
 	poi = api_call(latitude=latit, longitude=longit, number_of_results=number_of_results)
 	graph.add_node(0, location=(latit, longit), title=initial_airport, desc="Airport", wiki="", img="", isAirport=True)
@@ -63,7 +64,7 @@ def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit
 		if res.location.longitude > maxx:
 			maxx = res.location.longitude
 
-		graph.add_node(ind+1 , location=lat_long[-1], title=res.title, desc=res.details.short_description, wiki=res.details.wiki_page_link, img=res.main_image, isAirport=False)
+		graph.add_node(ind+1 , location=lat_long[-1], title=res.title, desc=res.details.short_description, wiki=res.details.wiki_page_link, img=res.main_image, isAirport=False, isFlight=False)
 	print(minx, maxx, miny, maxy)
 	# Add the edges
 	edges = []
@@ -91,6 +92,7 @@ def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit
 		if not nodes:
 			break
 		if edge[0] in nodes and edge[1] in nodes:
+			notInLocation = True
 			fail = False
 			for e in added_edges:
 				intersection = calculateIntersectionPoint(lat_long[edge[0]][1], lat_long[edge[0]][0], lat_long[edge[1]][1], lat_long[edge[1]][0], lat_long[e[0]][1], lat_long[e[0]][0], lat_long[e[1]][1], lat_long[e[1]][0])
@@ -99,7 +101,7 @@ def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit
 				# Check if in range of a location
 				for l in lat_long:
 					if abs(intersection[0] - l[1]) <= 0.005 and abs(intersection[1] - l[0]) <= 0.005:
-						fail = False
+						notInLocation = False
 						break
 				
 
@@ -110,11 +112,19 @@ def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit
 				graph.add_edge(edge[0], edge[1], distance=edge[2])
 
 	# Put edges in one by one until cannot
+	# Add in flight edges
+	dest = Next_Desitination()
+	flight_tuples = dest.getLocations(airport_code)
+
+	for ix, f in enumerate(flight_tuples):
+		graph.add_node(1337+ ix)
+		graph.add_edge(0, 1337+ix, isFlight=True, destination=f[1], latitude=f[2], longitude=f[3], airport_name=f[4], dep_date=f[5], ret_date=f[6], price=f[7] )
+
 
 	data = json_graph.node_link_data(graph)
 	
-	"""with open('test_json.txt', 'w') as f:
-					f.write(str(data))"""
+	# with open('test_json.txt', 'w') as f:
+	# 				f.write(str(data))
 	
 	return data
 	#nx.draw(graph)
