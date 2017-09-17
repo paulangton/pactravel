@@ -33,7 +33,7 @@ class Itinerary {
     if (exp instanceof TestExperience) {
       newDiv.innerHTML = 'Test Experience!';
     } else if (exp instanceof AttractionNode) {
-      newDiv.innerHTML = '<p align="left"> - Visited \"' + exp.data.title + '\"! </h6>';
+      newDiv.innerHTML = '<h6> - Visited \"' + exp.data.title + '\"! </h6>';
     } else if (exp instanceof InterCityEdge) {
       newDiv.innerHTML = '</hr><h3>Flight from ' + exp.a.data.title + ' to ' + exp.b.data.title + '</h3><span><i>Cost: ' + exp.b.data.price + ' Duration: ' + exp.time + '</i></span>';
     } else {
