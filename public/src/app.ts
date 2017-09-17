@@ -33,6 +33,8 @@ function Initialize(): void {
   console.log(cg2);
 
   itinerary = new Itinerary();
+  
+  OnFlight(null);
 
   setInterval(Update, 100);
 }
@@ -81,11 +83,22 @@ function Update(): void {
   pacman.move(pacMovement);
   pacman.draw(map);
   console.log(pacman.lat);
-
 }
 
 function OnFlight(newCity: any) {
+  let query = {
+    lat: 0,
+    long: 0,
+    name: ""
+  }
+  var myRequest = new Request('http://localhost/poi?latitude=' + query.lat + '&longitude=' + query.long + '&airport_name=' + query.name);
 
+  console.log(myRequest.url);
+  fetch(myRequest).then(function(res) {
+    console.log(res);
+  }).catch(function(err) {
+    console.log(err);
+  });
 }
 
 //
