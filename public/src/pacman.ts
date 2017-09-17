@@ -19,19 +19,19 @@ class Pacman {
   move(n : number) : void {
     let speed : number = Math.sqrt(Math.pow(this.toNode.lat - this.fromNode.lat, 2) + Math.pow(this.toNode.lng - this.fromNode.lng, 2)) / n;
     let latDif : number = this.toNode.lat - this.lat;
-    let lngDif : number = this.toNode.lng - this.lng
-    let direction = Math.atan(latDif/lngDif)
+    let lngDif : number = this.toNode.lng - this.lng;
+    let direction = Math.atan(latDif/lngDif); // in radians
     if (latDif > 0) {
-      this.lat += speed * Math.cos();
+      this.lat += speed * Math.cos(direction);
     }
     else {
-      this.lat -= speed * Math.cos();
+      this.lat -= speed * Math.cos(direction);
     }
     if (lngDif > 0) {
-      this.lng -= speed * Math.sin();
+      this.lng += speed * Math.sin(direction);
     }
     else{
-      this.lng -= speed * Math.sin();
+      this.lng -= speed * Math.sin(direction);
     }
   }
 

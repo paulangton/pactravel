@@ -10,21 +10,25 @@ function Initialize() : void {
     mapTypeId: 'terrain'
   });
   
-  var flightPlanCoordinates = [
-    {lat: 37.772, lng: -122.214},
-    {lat: 21.291, lng: -157.821},
-    {lat: -18.142, lng: 178.431},
-    {lat: -27.467, lng: 153.027}
+  var cities = [
+    new ANode(37.772,-122.214),
+    new ANode(21.291,-157.821),
+    new ANode(-18.142,178.431),
+    new ANode(-27.467, 153.027)
   ];
-  var flightPath = new google.maps.Polyline({
-    path: flightPlanCoordinates,
-    geodesic: true,
-    strokeColor: '#FF0000',
-    strokeOpacity: 1.0,
-    strokeWeight: 2
-  });
-  
-  flightPath.setMap(map);
+
+  var edges = [
+    new Edge(cities[0], cities[1]),
+    new Edge(cities[1], cities[2]),
+    new Edge(cities[2], cities[3]),
+    new Edge(cities[3], cities[0]),
+  ];
+
+  let cg = new CityGraph();
+  cg.Nodes = cities;
+  cg.Edges = edges;
+
+  cg.draw(map);
 }
 
 function Update() : void {

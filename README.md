@@ -5,3 +5,6 @@ npm install - on command line
 
 to start backend:
 npm start - on command line
+
+to activate virtual environment 
+. venv/bin/active
