@@ -8,19 +8,19 @@ dest = Next_Desitination()
 
 @app.route('/next_locations')
 def next_locations():
-    return jsonify({'dest': dest.getLocations('NYC')})
+    loc = request.args['location']
+    return jsonify({'data': dest.getLocations(loc)})
 
 @app.route('/poi', methods=["GET"])
 def points_of_interest():
-	print("YO")
 	lat = int(request.args['latitude'])
 	longit = int(request.args['longitude'])
 	airport_name = request.args['airport_name']
 	
 	if lat == 0 and longit == 0:
-		return jsonify({'flugidablah': graph.genGraph()})
+		return jsonify({'data': graph.genGraph()})
 	else:
-		return jsonify({'flugidablah': graph.genGraph(initial_airport=airport_name, latit=lat, longit=longit)})
+		return jsonify({'data': graph.genGraph(initial_airport=airport_name, latit=lat, longit=longit)})
             
 if __name__ == '__main__':
 	app.run()
