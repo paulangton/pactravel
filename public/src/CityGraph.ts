@@ -2,8 +2,8 @@
 
 class CityGraph {
 
-    Nodes : ANode[];
-    Edges : AEdge[];
+    Nodes : ANode[] = [];
+    Edges : AEdge[] = [];
 
     GetBestEdge(node : ANode, angle: number) : AEdge {
         return this.Edges[0];
@@ -32,7 +32,7 @@ class CityGraph {
                 fillOpacity: 0.35,
                 map: map,
                 center: {lat: n.lat, lng: n.long},
-                radius: 200000
+                radius: 100
             });
         }
     }
@@ -47,6 +47,7 @@ class Experience {
 class ANode extends Experience {
   lat : number;
   long : number;
+  data : any;
 
   constructor(lat : number, long : number) {
     super();
@@ -67,6 +68,7 @@ class AttractionNode extends ANode {
 class AEdge extends Experience {
     a : ANode;
     b : ANode;
+    data : any;
 
     constructor(a : ANode, b : ANode) {
       super();
