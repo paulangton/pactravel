@@ -6,6 +6,18 @@ from pprint import pprint
 import networkx as nx 
 from networkx.readwrite import json_graph
 
+graph = nx.DiGraph()
+
+def checkDegree():
+	degs = nx.degree(graph)
+	availableNodes = []
+	for k, v in degs.items():
+		if v < 3:
+			availableNodes.append(k)
+
+	return availableNodes
+
+
 def genGraph(number_of_results=10):
 	# create an instance of the API class
 	api_instance = swagger_client.DefaultApi()
@@ -19,12 +31,36 @@ def genGraph(number_of_results=10):
 	image_size = 'MEDIUM' # str | The size of the images you'd like to see in the response (optional) (default to MEDIUM)
 	number_of_images = 4 # int | Number of images to display (optional) (default to 4)
 	number_of_results = 10 # int | The maximum number of points of interest to return in the results set. This is a range from 1 to 100 (optional) (default to 20)
-
+	lat_long = []
 	try: 
-	    # YapQ City Name Search - Find landmarks and attractions in a given city.
-	    api_response = api_instance.yap_q_city_name_search(apikey, city_name, lang=lang, geonames=geonames, vibes=vibes, social_media=social_media, image_size=image_size, number_of_images=number_of_images, number_of_results=number_of_results)
-	    pprint(api_response)
+		# YapQ City Name Search - Find landmarks and attractions in a given city.
+		api_response = api_instance.yap_q_city_name_search(apikey, city_name, lang=lang, geonames=geonames, vibes=vibes, social_media=social_media, image_size=image_size, number_of_images=number_of_images, number_of_results=number_of_results)
+		poi = api_response.points_of_interest
+		for ind, res in enumerate(poi):
+			lat_long.append([res.location.latitude, res.location.longitude])
+			graph.add_node(ind, location=lat_long[-1], title=res.title, desc=res.details.short_description, wiki=res.details.wiki_page_link, img=res.main_image)
+
+		# Add the edges
+		edges = []
+		for i in range(len(poi)):
+			for j in range(i + 1,len(poi)):
+				edges.append((i, j, ((lat_long[i][0] - lat_long[j][0]) ** 2  + (lat_long[i][1] - lat_long[j][1])** 2) ** 0.5))
+		edges.sort(key=lambda x: x[2])
+		for ind, edge in enumerate(edges):
+			nodes = checkDegree()
+			if not nodes:
+				break
+			if edge[0] in nodes and edge[1] in nodes:
+				graph.add_edge(edge[0], edge[1], distance=edge[2])
+
+		# Put edges in one by one until cannot
+
+		data = json_graph.node_link_data(graph)
+		with open('test_json.txt', 'w') as f:
+			f.write(str(data))
 	except ApiException as e:
 	    print("Exception when calling DefaultApi->yap_q_city_name_search: %s\n" % e)
+
+    
 
 genGraph()
