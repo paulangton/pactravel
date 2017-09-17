@@ -54,24 +54,23 @@ function Update(): void {
     }
   }
 
+
   // Pacman is paused at a node, waiting user input to go somewhere else
   if (dist == 0 && closestNode != pacman.fromNode) {
     let inputAngle = GetInputDirection();
+    console.log("Input angle: " + inputAngle)
     if (inputAngle == null) return; // User hasn't pressed anything
     let e: AEdge = latestCity.GetBestEdge(closestNode as ANode, inputAngle); // Get most likely edge
 
     // Set the pacman path
-    pacman.fromNode = closestNode as ANode;
-    pacman.toNode = (e.a == closestNode) ? e.b : e.a;
-    pacman.lat = pacman.fromNode.lat;
-    pacman.long = pacman.fromNode.long;
+    let newPathNode = (e.a == closestNode) ? e.b : e.a;
+    pacman.turn(newPathNode)
   }
 
   let pacMovement = .001;
 
   pacman.move(pacMovement);
   pacman.draw(map);
-  console.log(pacman.lat);
 
 }
 
@@ -97,17 +96,17 @@ function GetInputDirection() {
   let isLeft = keys[37] || keys[65] || false;
   let isRight = keys[39] || keys[68] || false;
 
-  if (!(isUp && isDown && isLeft && isRight)) return null;
+  if (!(isUp || isDown || isLeft || isRight)) return null;
 
-  if (isUp && !(isDown && isLeft && isRight)) return Math.PI / 2;
-  if (isDown && !(isUp && isLeft && isRight)) return 3 * Math.PI / 2;
-  if (isLeft && !(isUp && isDown && isRight)) return Math.PI;
-  if (isRight && !(isUp && isDown && isLeft)) return 0;
+  if (isUp && !(isDown || isLeft || isRight)) return Math.PI / 2;
+  if (isDown && !(isUp || isLeft || isRight)) return 3 * Math.PI / 2;
+  if (isLeft && !(isUp || isDown || isRight)) return Math.PI;
+  if (isRight && !(isUp || isDown || isLeft)) return 0;
 
-  if (isUp && isLeft && !(isDown && isLeft && isRight)) return 3 * Math.PI / 4;
-  if (isDown && isRight && !(isUp && isLeft && isRight)) return 7 * Math.PI / 4;
-  if (isLeft && isDown && !(isUp && isDown && isRight)) return 5 * Math.PI / 4;
-  if (isRight && isUp && !(isUp && isDown && isLeft)) return 1 * Math.PI / 4;
+  if (isUp && isLeft && !(isDown || isRight)) return 3 * Math.PI / 4;
+  if (isDown && isRight && !(isUp || isLeft)) return 7 * Math.PI / 4;
+  if (isLeft && isDown && !(isUp || isRight)) return 5 * Math.PI / 4;
+  if (isRight && isUp && !(isDown || isLeft)) return 1 * Math.PI / 4;
   throw new Error("GetInputDirection failed!");
 }
 

@@ -30,11 +30,10 @@ class Pacman {
     this.renderState += 1;
   }
 
-  // Reverses pacman's direction
-  rev(): void {
-    let temp = this.toNode;
-    this.toNode = this.fromNode;
-    this.fromNode = this.toNode;
+  // turns the pacman to a different path
+  turn(toNode : ANode) : void {
+    this.fromNode = this.toNode
+    this.toNode = toNode
   }
 
   // returns a minimum distance (speed) for pacman to move in order to complete
@@ -48,42 +47,54 @@ class Pacman {
     console.log(direction);
 
     if (latDif > 0) {
-      this.lat += speed * Math.cos(direction);
+      this.lat += speed * Math.sin(direction);
       if (this.lat > this.toNode.lat) {
-        this.lat = this.toNode.lat
+        this.lat = this.toNode.lat;
       }
     }
     else {
-      this.lat -= speed * Math.cos(direction);
+      this.lat -= speed * Math.sin(direction);
       if (this.lat < this.toNode.lat) {
-        this.lat = this.toNode.lat
+        this.lat = this.toNode.lat;
       }
     }
     if (longDif > 0) {
-      this.long += speed * Math.sin(direction);
+      this.long += speed * Math.cos(direction);
       if (this.long > this.toNode.long) {
-        this.long = this.toNode.long
+        this.long = this.toNode.long;
       }
     }
     else {
-      this.long -= speed * Math.sin(direction);
+      this.long -= speed * Math.cos(direction);
       if (this.long < this.toNode.long) {
-        this.long = this.toNode.long
+        this.long = this.toNode.long;
       }
     }
   }
 
   // draws a pacman
   draw(map: any) {
-    let url = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+    let iconBase : String = './resources/';
+    let icons = [
+      {
+        path: iconBase + 'pacman0.png'
+      },
+      {
+        path: iconBase + 'pacman1.png'
+      },
+      {
+        path: iconBase + 'pacman2.png'
+      }
+    ];
+
     var image = {
-      icon: './resources/pacman' + this.renderState + ".png",
+      path: "resources/pacman0.png",
       // This marker is 20 pixels wide by 32 pixels high.
-      size: new google.maps.Size(20, 32),
-      // The origin for this image is (0, 0).
-      origin: new google.maps.Point(0, 0),
-      // The anchor for this image is the base of the flagpole at (0, 32).
-      anchor: new google.maps.Point(32, 32)
+      // size: new google.maps.Size(32, 32),
+      // // The origin for this image is (0, 0).
+      // origin: new google.maps.Point(0, 0),
+      // // The anchor for this image is the base of the flagpole at (0, 32).
+      // anchor: new google.maps.Point(16, 16)
     };
 
     if (!this.marker) {
@@ -95,6 +106,8 @@ class Pacman {
       });
     }
     this.marker.setPosition(new google.maps.LatLng(this.lat, this.long));
+    this.renderState += 1;
   }
+
 
 }
