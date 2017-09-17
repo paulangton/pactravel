@@ -61,7 +61,7 @@ class Pacman {
   // draws a pacman
   draw(map : any) {
     var image = {
-      url: '../resources/pacman' + this.renderState + ".gif",
+      url: './resources/pacman' + this.renderState + ".gif",
       // This marker is 20 pixels wide by 32 pixels high.
       size: new google.maps.Size(20, 32),
       // The origin for this image is (0, 0).
@@ -70,10 +70,9 @@ class Pacman {
       anchor: new google.maps.Point(32, 32)
     };
 
-    this.marker.setMap(null);
+    if(this.marker) this.marker.setMap(null);
     this.marker = new google.maps.Marker({
       position: {lat:this.lat, lng: this.long},
-      map: map,
       icon: image,
       zIndex: 1
     });
