@@ -8,11 +8,17 @@ dest = Next_Desitination()
 
 @app.route('/next_locations')
 def next_locations():
+    if 'location' not in request.args:
+        return "BAD"
+        
     loc = request.args['location']
     return jsonify({'data': dest.getLocations(loc)})
 
-@app.route('/poi')
+@app.route('/poi', methods=["GET"])
 def points_of_interest():
+    if 'latitude' not in request.args or 'longitude' not in request.args or 'airport_name' not in request.args:
+        return "BAD"
+
 	lat = int(request.args['latitude'])
 	longit = int(request.args['longitude'])
 	airport_name = request.args['airport_name']
