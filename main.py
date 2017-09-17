@@ -22,11 +22,12 @@ def points_of_interest():
 	lat = int(request.args['latitude'])
 	longit = int(request.args['longitude'])
 	airport_name = request.args['airport_name']
+	airport_code = request.args['airport_code']
 	
 	if lat == 0 and longit == 0:
 		return jsonify({'data': graph.genGraph()})
 	else:
-		return jsonify({'data': graph.genGraph(initial_airport=airport_name, latit=lat, longit=longit)})
+		return jsonify({'data': graph.genGraph(initial_airport=airport_name, airport_code=airport_code, latit=lat, longit=longit)})
             
 if __name__ == '__main__':
 	app.run()
