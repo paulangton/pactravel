@@ -24,7 +24,7 @@ def api_call(latitude=42.3656132, longitude=-71.00956020000001, category="Museum
 
 	# create an instance of the API class
 	api_instance = swagger_client.DefaultApi()
-	apikey = 'VmaGyJA9nrXVyRtW5Dyx5tykZi4NGhlS' # str | API Key provided for your account, to identify you for API access. Make sure to keep this API key secret.
+	apikey = 'GAsTDGDsN8kpSP4Mo9MGZQovfGfJJAQE' # str | API Key provided for your account, to identify you for API access. Make sure to keep this API key secret.
 	radius = 42 # int | Radius around the center to look for points-of-interest around the given latitude and longitude in kilometers (km) (default to 42)
 	lang = 'EN' # str | The preferred language of the content related to each point of interest. Content will be returned in this language if available (optional) (default to EN)
 	category = 'Museum' # str | Filters the resulting points_of_interest to include only results which have a least one category containing the given provided word. Good examples are <em>museum</em>, <em>landmark</em> or <em>church</em> (optional) (default to Museum)
@@ -96,10 +96,10 @@ def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit
 
 	data = json_graph.node_link_data(graph)
 	
-	with open('test_json.txt', 'w') as f:
-		f.write(str(data))
+	# with open('test_json.txt', 'w') as f:
+	# 	f.write(str(data))
 	
 	return data
 	#nx.draw(graph)
 	
-genGraph()
+# genGraph()
