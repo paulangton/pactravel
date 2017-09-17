@@ -1,10 +1,12 @@
 # hackmit2017
 
-first time running backend:
-npm install - on command line
+Install Typescript:
+npm install -g tsc
 
-to start backend:
-npm start - on command line
+Compile Typescript:
+tsc -p ./public/src/tsconfig.json app.ts
 
-to activate virtual environment 
-. venv/bin/active
+Open ./public/index.html in your favorite browser to experience the magic.
+
+to activate virtual environment
+. venv/bin/activate
