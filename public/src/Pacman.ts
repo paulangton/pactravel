@@ -2,9 +2,20 @@
 class Pacman {
   lat : number;
   long : number;
-  mouthState : number; // 0, 1, or 2
+  renderState : number; // 0, 1, or 2
   fromNode : ANode;
   toNode : ANode;
+  marker : any;
+
+  // Sets render state
+  setRenderState(renderState : number) : void {
+    this.renderState = renderState;
+  }
+
+  // increments render state
+  next() : void {
+    this.renderState += 1;
+  }
 
   // Reverses pacman's direction
   rev() : void {
@@ -32,6 +43,29 @@ class Pacman {
     else{
       this.long -= speed * Math.sin(direction);
     }
+  }
+
+  // draws a pacman
+  draw(map : any) {
+    var image = {
+      url: '../resources/pacman' + this.renderState + ".gif",
+      // This marker is 20 pixels wide by 32 pixels high.
+      size: new google.maps.Size(20, 32),
+      // The origin for this image is (0, 0).
+      origin: new google.maps.Point(0, 0),
+      // The anchor for this image is the base of the flagpole at (0, 32).
+      anchor: new google.maps.Point(32, 32)
+    };
+
+    marker.setMap(null);
+    this.marker = new google.maps.Marker({
+      position: event.latLng,
+      map: map,
+      icon: image,
+      zIndex: 1
+    });
+    marker.setMap(map);
+
   }
 
 }
