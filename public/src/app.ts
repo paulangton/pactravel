@@ -19,7 +19,7 @@ function Initialize(): void {
   });
 
   let cg2 = GetCityGraphFromServerGraph(JSON.parse(example));
-  OnCityLoad(cg2);
+  // OnCityLoad(cg2);
 
   let edge = cg2.Edges[0];
   pacman = new Pacman(
@@ -35,6 +35,7 @@ function Initialize(): void {
   itinerary = new Itinerary();
 
   OnFlight(null);
+  OnDoneFlying("Boston");
 
   setInterval(Update, 100);
 }
@@ -74,7 +75,7 @@ function Update(): void {
 
     // Set the pacman path
     let newPathNode = (e.a == closestNode) ? e.b : e.a;
-    pacman.turn(newPathNode)
+    //pacman.turn(newPathNode)
   }
 
   let pacMovement = .001;
@@ -88,16 +89,31 @@ function OnFlight(newCity: any) {
   let query = {
     lat: 0,
     long: 0,
-    name: ""
+    name: "hii"
   }
-  var myRequest = new Request('http://localhost/poi?latitude=' + query.lat + '&longitude=' + query.long + '&airport_name=' + query.name);
+  var myRequest = new Request('http://127.0.0.1:5000/poi?latitude=' + query.lat + '&longitude=' + query.long + '&airport_name=' + query.name);
 
   console.log(myRequest.url);
-  fetch(myRequest).then(function(res) {
-    console.log(res);
-  }).catch(function(err) {
-    console.log(err);
-  });
+  fetch(myRequest)
+    .then(function (res) {
+      if (res.status == 200) return res.json();
+      else throw new Error('Something went wrong on api server!');
+    })
+    .then(function (res) {
+      console.log(res.data);
+      OnCityLoad(GetCityGraphFromServerGraph(res.data));
+      OnDoneFlying();
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
+}
+
+function OnDoneFlying() {
+  let citySize = latestCity.center();
+  console.log(citySize);
+  map.setCenter({lat: citySize[0], lng: citySize[1]});
+  map.setZoom(Math.round(citySize[2] / 4.36));
 }
 
 //

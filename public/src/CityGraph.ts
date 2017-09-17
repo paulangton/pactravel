@@ -50,7 +50,25 @@ class CityGraph {
         }
     }
 
+    center() {
+        let latSum = 0;
+        let longSum = 0;
+        let count = 0;
+        let latBounds = [0,0];
+        let longBounds = [0,0];
 
+        for(let n of this.Nodes) {
+            latSum += n.lat;
+            longSum += n.long;
+            latBounds[0] = Math.min(latBounds[0], n.lat);
+            latBounds[1] = Math.max(latBounds[1], n.lat);
+            longBounds[0] = Math.min(longBounds[0], n.long);
+            longBounds[1] = Math.max(longBounds[1], n.long);
+
+            count += 1;
+        }
+        return [latSum / count, longSum / count, ((latBounds[1] - latBounds[0]) + (longBounds[1] - longBounds[0])) / 2];
+    }
 }
 
 class Experience {
