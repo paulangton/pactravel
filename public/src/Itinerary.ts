@@ -35,7 +35,9 @@ class Itinerary {
     } else {
       return;
     }
+    
     itineraryDiv.insertBefore(newDiv, itineraryPad);
+    itineraryDiv.classList.add('itinerary-item');
 
     itineraryDiv.scrollTop = itineraryDiv.scrollHeight - itineraryDiv.clientHeight;
     return;
