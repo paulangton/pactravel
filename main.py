@@ -19,8 +19,8 @@ def points_of_interest():
     if 'latitude' not in request.args or 'longitude' not in request.args or 'airport_name' not in request.args:
         return "BAD"
 
-	lat = int(request.args['latitude'])
-	longit = int(request.args['longitude'])
+	lat = float(request.args['latitude'])
+	longit = float(request.args['longitude'])
 	airport_name = request.args['airport_name']
 	airport_code = request.args['airport_code']
 	
