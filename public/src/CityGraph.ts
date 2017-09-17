@@ -7,7 +7,6 @@ class CityGraph {
     // return edge whose angle from east corresponds most closely with the input angle
     GetBestEdge(node: ANode, angle: number): AEdge {
         let bestEdge = this.Edges[0];
-        console.log(this.Edges[0]);
         for(let e of this.Edges) {
           if (e.a == node || e.b == node) {
             let curBestAngle : number = Math.abs(bestEdge.getAngleFromEast(node) - angle);
@@ -60,7 +59,7 @@ class CityGraph {
         let longBounds = [0,0];
 
         for(let n of this.Nodes) {
-            if(n instanceof TravelNode) continue; 
+            if(n instanceof TravelNode) continue;
             latSum += n.lat;
             longSum += n.long;
             latBounds[0] = Math.min(latBounds[0], n.lat);
@@ -151,13 +150,13 @@ class AEdge extends Experience {
       let latDif: number;
       let longDif: number;
       if (startNode == this.a) {
-        latDif = this.b.lat - this.a.lat
-        longDif = this.b.long - this.a.long
+        latDif = this.b.lat - this.a.lat;
+        longDif = this.b.long - this.a.long;
 
       }
       else if (startNode == this.b) {
-        latDif = this.a.lat - this.b.lat
-        longDif = this.a.long - this.b.long
+        latDif = this.a.lat - this.b.lat;
+        longDif = this.a.long - this.b.long;
 
       }
       else {
@@ -167,8 +166,13 @@ class AEdge extends Experience {
         console.log(this.b);
         return 0;
       }
-      // in radians
-      return Math.atan2(latDif, longDif);
+      console.log(latDif);
+      console.log(longDif);
+      let angle = Math.atan2(latDif, longDif);
+      angle = angle < 0 ? 2 * Math.PI + angle : angle;
+      console.log(angle + " is the east angle");
+      // in radians 0 - 2pi
+      return angle;
     }
 }
 

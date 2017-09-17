@@ -20,7 +20,7 @@ class Next_Desitination(object):
         tmr = datetime.datetime.now() + datetime.timedelta(days=1)
         departure_date = tmr.strftime("%Y-%m-%d")
 
-        try: 
+        try:
             api_response = self.api_instance.flight_inspiration_search(self.apikey, origin, departure_date=departure_date, one_way=True, direct=True)
 
             result = []
