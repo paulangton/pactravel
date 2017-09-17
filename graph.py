@@ -24,7 +24,7 @@ def api_call(latitude=42.3656132, longitude=-71.00956020000001, category="Museum
 
 	# create an instance of the API class
 	api_instance = swagger_client.DefaultApi()
-	apikey = 'VmaGyJA9nrXVyRtW5Dyx5tykZi4NGhlS' # str | API Key provided for your account, to identify you for API access. Make sure to keep this API key secret.
+	apikey = 'GAsTDGDsN8kpSP4Mo9MGZQovfGfJJAQE' # str | API Key provided for your account, to identify you for API access. Make sure to keep this API key secret.
 	radius = 42 # int | Radius around the center to look for points-of-interest around the given latitude and longitude in kilometers (km) (default to 42)
 	lang = 'EN' # str | The preferred language of the content related to each point of interest. Content will be returned in this language if available (optional) (default to EN)
 	category = 'Museum' # str | Filters the resulting points_of_interest to include only results which have a least one category containing the given provided word. Good examples are <em>museum</em>, <em>landmark</em> or <em>church</em> (optional) (default to Museum)
@@ -64,16 +64,28 @@ def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit
 			maxx = res.location.longitude
 
 		graph.add_node(ind+1 , location=lat_long[-1], title=res.title, desc=res.details.short_description, wiki=res.details.wiki_page_link, img=res.main_image, isAirport=False)
-
+	print(minx, maxx, miny, maxy)
 	# Add the edges
 	edges = []
 	added_edges = []
-	for i in range(len(poi)):
-		for j in range(i + 1,len(poi)):
+	mind = 2000000.0
+	minind = 3123211
+	for i in range(len(poi)+1):
+		for j in range(i + 1,len(poi)+1):
 			d = ((lat_long[i][0] - lat_long[j][0]) ** 2  + (lat_long[i][1] - lat_long[j][1])** 2) ** 0.5
 			if d <= 0.04:
 				edges.append((i, j, d))
+			if i == 0 and d < mind:
+
+				minind = j
+				mind = d
+
+	
+	
 	edges.sort(key=lambda x: x[2])
+	edges.insert(0, (0, minind, mind))
+	
+
 	for ind, edge in enumerate(edges):
 		nodes = checkDegree(graph)
 		if not nodes:
@@ -82,9 +94,14 @@ def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit
 			fail = False
 			for e in added_edges:
 				intersection = calculateIntersectionPoint(lat_long[edge[0]][1], lat_long[edge[0]][0], lat_long[edge[1]][1], lat_long[edge[1]][0], lat_long[e[0]][1], lat_long[e[0]][0], lat_long[e[1]][1], lat_long[e[1]][0])
-				# checkBounding()
 				if intersection[0] <= maxx and intersection[0] >= minx and intersection[1] >= miny and intersection[1] <= maxy:
 					fail = True
+				# Check if in range of a location
+				for l in lat_long:
+					if abs(intersection[0] - l[1]) <= 0.005 and abs(intersection[1] - l[0]) <= 0.005:
+						fail = False
+						break
+				
 
 			
 
@@ -96,10 +113,10 @@ def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit
 
 	data = json_graph.node_link_data(graph)
 	
-	with open('test_json.txt', 'w') as f:
-		f.write(str(data))
+	"""with open('test_json.txt', 'w') as f:
+					f.write(str(data))"""
 	
 	return data
 	#nx.draw(graph)
 	
-genGraph()
+#genGraph()
