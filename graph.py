@@ -6,9 +6,9 @@ from pprint import pprint
 import networkx as nx 
 from networkx.readwrite import json_graph
 #import matplotlib
-graph = nx.DiGraph()
 
-def checkDegree():
+
+def checkDegree(graph):
 	degs = nx.degree(graph)
 	availableNodes = []
 	for k, v in degs.items():
@@ -40,7 +40,7 @@ def api_call(latitude=42.3656132, longitude=-71.00956020000001, category="Museum
 		return []
 
 def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit=42.3656132, longit=-71.00956020000001 ):
-	
+	graph = nx.DiGraph()
 
 	poi = api_call(latitude=latit, longitude=longit, number_of_results=number_of_results)
 	graph.add_node(0, location=(latit, longit), title=initial_airport, desc="Airport", wiki="", img="", isAirport=True)
@@ -59,7 +59,7 @@ def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit
 			edges.append((i, j, ((lat_long[i][0] - lat_long[j][0]) ** 2  + (lat_long[i][1] - lat_long[j][1])** 2) ** 0.5))
 	edges.sort(key=lambda x: x[2])
 	for ind, edge in enumerate(edges):
-		nodes = checkDegree()
+		nodes = checkDegree(graph)
 		if not nodes:
 			break
 		if edge[0] in nodes and edge[1] in nodes:
