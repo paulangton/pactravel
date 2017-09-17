@@ -45,6 +45,8 @@ class Pacman {
     let latDif: number = this.toNode.lat - this.lat;
     let longDif: number = this.toNode.long - this.long;
     let direction = Math.atan(latDif / longDif); // in radians
+    console.log(direction);
+
     if (latDif > 0) {
       this.lat += speed * Math.cos(direction);
       if (this.lat > this.toNode.lat) {
