@@ -1,16 +1,17 @@
-console.log("Hello!");
+console.log("Alex is a lame boi!");
 
 declare var google: any;
 
 var paused: boolean = true;
 
-var pacman: Pacman = new Pacman;
+var pacman: Pacman;
 
 var map: any;
 var latestCity: CityGraph;
 var visitedCities: CityGraph[];
 
 function Initialize(): void {
+  pacman = new Pacman(37.772, -122.214, new ANode(37.772, -122.214, "turtle beach"), new ANode(21.291, -157.821, "myrtle beach"));
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 3,
     center: { lat: 0, lng: -180 },
@@ -18,10 +19,10 @@ function Initialize(): void {
   });
 
   var cities = [
-    new ANode(37.772, -122.214),
-    new ANode(21.291, -157.821),
-    new ANode(-18.142, 178.431),
-    new ANode(-27.467, 153.027)
+    new ANode(37.772, -122.214, "turtle beach"),
+    new ANode(21.291, -157.821, "myrtle beach"),
+    new ANode(-18.142, 178.431, "boston beach"),
+    new ANode(-27.467, 153.027, "coconut beach")
   ];
 
   var edges = [
@@ -84,11 +85,11 @@ function Update(): void {
   }
 
   // Pacman is paused at a node, waiting user input to go somewhere else
-  if(dist == 0) { 
+  if(dist == 0) {
     let inputAngle = GetInputDirection();
     if(inputAngle == null) return; // User hasn't pressed anything
     let e : AEdge = latestCity.GetBestEdge(closestNode as ANode, inputAngle); // Get most likely edge
-    
+
     // Set the pacman path
     pacman.fromNode = closestNode as ANode;
     pacman.toNode = (e.a == closestNode) ? e.b : e.a;
@@ -106,7 +107,7 @@ function OnFlight(newCity: any) {
 
 }
 
-// 
+//
 function OnCityLoad(newCityGraph: any): void {
   latestCity = newCityGraph;
   visitedCities.push(newCityGraph);

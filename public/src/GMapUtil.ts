@@ -23,6 +23,8 @@ function insertAfter(newNode : HTMLElement, referenceNode : HTMLElement) {
 }
 
 // Distance using lat/long isn't really euclidean...
+// Shhhhhhhh its a secret.
+// For future reference we can use curvature of earth = 8in/mi
 function Distance(latLng1: any, latLng2: any) {
     return Math.sqrt(
         (latLng1.lat - latLng2.lat)**2 +

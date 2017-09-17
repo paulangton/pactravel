@@ -7,6 +7,19 @@ class Pacman {
   toNode : ANode;
   marker : any;
 
+  constructor(lat : number, long : number, fromNode : ANode, toNode : ANode, renderState? : number) {
+    this.lat = lat;
+    this.long = long;
+    this.fromNode = fromNode;
+    this.toNode = toNode;
+    if (renderState) {
+      this.renderState = renderState;
+    }
+    else {
+      this.renderState = 0;
+    }
+  }
+
   // Sets render state
   setRenderState(renderState : number) : void {
     this.renderState = renderState;
