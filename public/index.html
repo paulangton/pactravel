@@ -5,40 +5,45 @@
   <style>
     /* Always set the map height explicitly to define the size of the div
     * element that contains the map. */
-
+    
     #container {
       height: 100%;
       width: 100%;
     }
-
+    
     #map {
       height: 100%;
       width: 80%;
       float: left;
     }
-
+    
     #itinerary {
       height: 100%;
-      width: 19%;
+      width: 20%;
       float: left;
       background-color: white;
-      overflow-y: scroll;
+      overflow-y: auto;
     }
-
+    
     #itinerary-pad {
       height: 200px;
     }
     /* Optional: Makes the sample page fill the window. */
-
+    
     .itinerary-item {
-      margin: 5px;
+      padding: 5 px;
       background: #CCCCCC;
-      font-family: Helvetica, Arial, sans-serif;
-
+      font-family: 'Work Sans', 'Open Sans', Helvetica, Arial, sans-serif;
+      text-align: right;
+      
       transition: all 2s ease-in;
     }
-
-
+    
+    ::-webkit-scrollbar {
+      width: 0px;
+      background: transparent; /* make scrollbar transparent */
+    }
+    
     html,
     body {
       height: 100%;
@@ -52,17 +57,18 @@
   <div id="container">
     <div id="map"></div>
     <div id="itinerary">
-      <div style="text-align:center; padding-top: 5px">
+      <div style="text-align:center; padding-top: 5px; padding-bottom: 5px; background-color: #222222; color: #dddddd">
         <h2>
-        Itinirary
+          Itinerary
         </h2>
       </div>
       <div id="itinerary-pad"></div>
     </div>
   </div>
-
+  
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBStiv7YHtqvW3chO9jk5mN4iJI3_6ze8A&callback=Initialize">
-  </script>
+</script>
+<link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
 </body>
 
 </html>
