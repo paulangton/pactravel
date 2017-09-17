@@ -30,7 +30,6 @@ def api_call(latitude=42.3656132, longitude=-71.00956020000001, category="Museum
 	social_media = False # bool | Enabling this includes images from Instagram in the output results. This is disabled by default, since these images are often just pictures of people or food, which often have little relevance to the actual location (optional) (default to false)
 	image_size = 'MEDIUM' # str | The size of the images you'd like to see in the response (optional) (default to MEDIUM)
 	number_of_images = 1 # int | Number of images to display. (optional) (default to 4)
-	number_of_results = 15 # int | The maximum number of points of interest to return in the results set. This is a range from 1 to 100 (optional) (default to 20)
 	try: 
 		# YapQ Geosearch - Find landmarks and attractions near a given point.
 		api_response = api_instance.yap_q_geosearch(apikey, latitude, longitude, radius, lang=lang, category=category, geonames=geonames, vibes=vibes, social_media=social_media, image_size=image_size, number_of_images=number_of_images, number_of_results=number_of_results)
