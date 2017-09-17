@@ -13,6 +13,10 @@ var visitedCities: CityGraph[] = [];
 
 var queryOrlando = 
 {lat: 28.429394, long: -81.30899, air_name: "Orlando Airport", air_code: "ORL"};
+var queryLondon = 
+{lat: 51.504520, long: 0.048212, air_name: "London Ccity", air_code: "LCY"};
+var queryMyrtle = 
+{lat: 51.504520, long: 0.048212, air_name: "Myrtle Beach International Airport", air_code: "MYR"};
 
 function Initialize(): void {
   map = new google.maps.Map(document.getElementById('map'), {
