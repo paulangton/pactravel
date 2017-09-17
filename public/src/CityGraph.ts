@@ -5,6 +5,10 @@ class CityGraph {
     Nodes : ANode[];
     Edges : Edge[];
 
+    GetBestEdge(node : ANode, angle: number) : Edge {
+        return this.Edges[0];
+    }
+
     draw(map : any) {
         for(let e of this.Edges) {
             var path = new google.maps.Polyline({

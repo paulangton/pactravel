@@ -57,14 +57,14 @@ class Pacman {
       anchor: new google.maps.Point(32, 32)
     };
 
-    marker.setMap(null);
+    this.marker.setMap(null);
     this.marker = new google.maps.Marker({
-      position: event.latLng,
+      position: {lat:this.lat, lng: this.long},
       map: map,
       icon: image,
       zIndex: 1
     });
-    marker.setMap(map);
+    this.marker.setMap(map);
 
   }
 
