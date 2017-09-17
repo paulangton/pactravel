@@ -55,7 +55,7 @@ function Update(): void {
   }
 
   // Pacman is paused at a node, waiting user input to go somewhere else
-  if (dist == 0) {
+  if (dist == 0 && closestNode != pacman.fromNode) {
     let inputAngle = GetInputDirection();
     if (inputAngle == null) return; // User hasn't pressed anything
     let e: AEdge = latestCity.GetBestEdge(closestNode as ANode, inputAngle); // Get most likely edge
@@ -70,6 +70,8 @@ function Update(): void {
   let pacMovement = .001;
 
   pacman.move(pacMovement);
+  pacman.draw()
+  console.log(pacman.lat);
 
 }
 
