@@ -1,41 +1,63 @@
 <html>
-<head>
-    <script src="./app.js"></script>
-    <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 100%;
-      }
 
-      #layout {
-        height: 100%
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-    </style>
+<head>
+  <script src="./app.js"></script>
+  <style>
+    /* Always set the map height explicitly to define the size of the div
+    * element that contains the map. */
+
+    #container {
+      height: 100%;
+      width: 100%;
+    }
+
+    #map {
+      height: 100%;
+      width: 80%;
+      float: left;
+    }
+
+    #itinerary {
+      height: 100%;
+      width: 20%;
+      float: left;
+      background-color: lightgray;
+      overflow-y: scroll;
+    }
+
+    #itinerary-pad {
+      height: 200px;
+    }
+    /* Optional: Makes the sample page fill the window. */
+
+    .itinerary-item {
+      margin: 10px;
+      background: gray;
+
+      transition: all 2s ease-in;
+    }
+
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
 </head>
 
 <body>
-  <table id="layout" width = "100%" border = "0">
-       <tr valign = "top">
-          <td width = "80%">
-             <div id="map"></div>
-          </td>
-          <td bgcolor = "#A9A9A9" width = "20%">
-             <b>Itinerary</b>
-             <div id="itinerary">
-               <div id="exp0"></div>
-             </div>
-          </td>
-       </tr>
+  <div id="container">
+    <div id="map"></div>
+    <div id="itinerary">
+      <div class="itinerary-item">Test item</div>
+      <div id="itinerary-pad"></div>
+    </div>
+  </div>
 
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBStiv7YHtqvW3chO9jk5mN4iJI3_6ze8A&callback=Initialize">
-    </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBStiv7YHtqvW3chO9jk5mN4iJI3_6ze8A&callback=Initialize">
+  </script>
 </body>
+
 </html>

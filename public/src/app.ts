@@ -5,6 +5,7 @@ declare var google: any;
 var paused: boolean = true;
 
 var pacman: Pacman;
+var itinerary: Itinerary;
 
 var map: any;
 var latestCity: CityGraph;
@@ -31,11 +32,19 @@ function Initialize(): void {
   console.log(pacman);
   console.log(cg2);
 
+  itinerary = new Itinerary();
+
   setInterval(Update, 100);
 }
 
 function Update(): void {
   console.log("Update!");
+
+  // Test itinerary
+  if (keys[84]) {
+    console.log("Adding test itinerary item!");
+    itinerary.visit(new TestExperience());
+  }
 
   if (keys[32]) paused = !paused; // Spacebar unpauses
   if (paused) return;
