@@ -1,10 +1,10 @@
 
 
 class CityGraph {
-    
+
     Nodes : ANode[];
     Edges : Edge[];
-    
+
     draw(map : any) {
         for(let e of this.Edges) {
             var path = new google.maps.Polyline({
@@ -16,9 +16,9 @@ class CityGraph {
                 strokeOpacity: 1.0,
                 strokeWeight: 2
             });
-            
+
             path.setMap(map);
-        } 
+        }
         for(let n of this.Nodes) {
             var cityCircle = new google.maps.Circle({
                 strokeColor: '#FF0000',
@@ -32,11 +32,21 @@ class CityGraph {
             });
         }
     }
-    
-    
+
+
 }
 
 class ANode {
+    lat : number;
+    long : number;
+
+    constructor(lat:number, long:number) {
+        this.lat = lat;
+        this.long = long;
+    }
+}
+
+class TravelNode {
     lat : number;
     long : number;
 
