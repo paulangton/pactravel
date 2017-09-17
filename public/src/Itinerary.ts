@@ -2,10 +2,13 @@
 class Itinerary {
   travels : Experience[];
 
-  // render the itinerary
-  draw() : void {
-    for (let t of this.travels) {
-      t.draw();
+  // Add to itinerary
+  visit(e : Experience) : void {
+    if (!(e instanceof IntraCityEdge)) {
+
     }
+    
+    this.travels.push(e);
   }
+
 }

@@ -3,7 +3,7 @@
 class CityGraph {
 
     Nodes : ANode[];
-    Edges : Edge[];
+    Edges : AEdge[];
 
     draw(map : any) {
         for(let e of this.Edges) {
@@ -36,32 +36,45 @@ class CityGraph {
 
 }
 
-class ANode {
-    lat : number;
-    long : number;
+class Experience {
 
-    constructor(lat:number, long:number) {
-        this.lat = lat;
-        this.long = long;
-    }
 }
 
-class TravelNode {
-    lat : number;
-    long : number;
+class ANode extends Experience {
+  lat : number;
+  long : number;
 
-    constructor(lat:number, long:number) {
-        this.lat = lat;
-        this.long = long;
-    }
+  constructor(lat : number, long : number) {
+    super();
+    this.lat = lat;
+    this.long = long;
+  }
+
 }
 
-class Edge {
+class TravelNode extends ANode {
+
+}
+
+class AttractionNode extends ANode {
+
+}
+
+class AEdge extends Experience {
     a : ANode;
     b : ANode;
 
-    constructor(a:ANode, b: ANode) {
-        this.a = a;
-        this.b = b;
+    constructor(a : ANode, b : ANode) {
+      super();
+      this.a = a;
+      this.b = b;
     }
+}
+
+class InterCityEdge extends AEdge {
+
+}
+
+class IntraCityEdge extends AEdge {
+
 }
