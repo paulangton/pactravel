@@ -1,7 +1,12 @@
 certifi==2017.7.27.1
--e git://github.com/django/django.git@8f947730ca6a9e3e538a377e7993e17ce3663ee6#egg=Django
+click==6.7
+Flask==0.12.2
+itsdangerous==0.24
+Jinja2==2.9.6
+MarkupSafe==1.0
 python-dateutil==2.6.1
 pytz==2017.2
 six==1.10.0
 swagger-client==1.0.0
 urllib3==1.22
+Werkzeug==0.12.2
