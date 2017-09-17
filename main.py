@@ -12,7 +12,15 @@ def next_locations():
 
 @app.route('/poi')
 def points_of_interest():
-    return "hello"
+	print("YO")
+	lat = int(request.args['latitude'])
+	longit = int(request.args['longitude'])
+	airport_name = request.args['airport_name']
+	
+	if lat == 0 and longit == 0:
+		return jsonify({'flugidablah': graph.genGraph()})
+	else:
+		return jsonify({'flugidablah': graph.genGraph(initial_airport=airport_name, latit=lat, longit=longit)})
             
 if __name__ == '__main__':
-    app.run()
+	app.run()

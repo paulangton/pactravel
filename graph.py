@@ -40,7 +40,7 @@ def api_call(latitude=42.3656132, longitude=-71.00956020000001, category="Museum
 
 def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit=42.3656132, longit=-71.00956020000001 ):
 	graph = nx.DiGraph()
-
+	print("YEAH BOI\n")
 	poi = api_call(latitude=latit, longitude=longit, number_of_results=number_of_results)
 	graph.add_node(0, location=(latit, longit), title=initial_airport, desc="Airport", wiki="", img="", isAirport=True)
 	lat_long = []
@@ -67,11 +67,10 @@ def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit
 	# Put edges in one by one until cannot
 
 	data = json_graph.node_link_data(graph)
+	print("FINALE\n")
+	return data
 	#nx.draw(graph)
+	"""
 	with open('test_json.txt', 'w') as f:
 		f.write(str(data))
-	
-
-    
-
-genGraph()
+	"""
