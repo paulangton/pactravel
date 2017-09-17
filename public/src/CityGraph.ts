@@ -23,7 +23,7 @@ class CityGraph {
 
     draw(map: any) {
         for (let e of this.Edges) {
-            let col = (e instanceof InterCityEdge) ? '#FF0000' : '#00E5EE';
+            let col = (e instanceof InterCityEdge) ? '#FF0000' : '#333333';
             var path = new google.maps.Polyline({
                 path: [
                     { lat: e.a.lat, lng: e.a.long },

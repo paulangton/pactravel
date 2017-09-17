@@ -1,6 +1,7 @@
 // An itinerary should be a list of experiences
 class Itinerary {
   travels: Experience[];
+  seen : any = {};
   lastExpId: number;
 
   constructor(travels?: Experience[], lastExpId?: number) {
@@ -21,6 +22,9 @@ class Itinerary {
 
   // Add to itinerary
   visit(exp: any): void {
+    if(this.seen[exp]) return;
+    this.seen[exp] = true;
+
     let itineraryDiv = document.getElementById("itinerary");
     let itineraryPad = document.getElementById("itinerary-pad");
     if (itineraryDiv == null) throw Error("Itinerary div doesn't exist!");
@@ -31,7 +35,7 @@ class Itinerary {
     } else if (exp instanceof AttractionNode) {
       newDiv.innerHTML = '\t- Visited ' + exp.data.title;
     } else if (exp instanceof InterCityEdge) {
-      newDiv.innerHTML = '<h3>Flight from ' + exp.data.from + ' to ' + exp.data.to + '</h3><span><i>Cost: ' + exp.cost + ' Duration: ' + exp.time + '</i></span>';
+      newDiv.innerHTML = '</hr><h3>Flight from ' + exp.a.data.title + ' to ' + exp.b.data.title + '</h3><span><i>Cost: ' + exp.b.data.price + ' Duration: ' + exp.time + '</i></span>';
     } else {
       return;
     }
