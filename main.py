@@ -10,7 +10,7 @@ dest = Next_Desitination()
 def next_locations():
     return jsonify({'dest': dest.getLocations('NYC')})
 
-@app.route('/poi')
+@app.route('/poi', methods=["GET"])
 def points_of_interest():
 	print("YO")
 	lat = int(request.args['latitude'])

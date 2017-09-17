@@ -55,7 +55,9 @@ def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit
 	print(len(lat_long) == len(poi) + 1)
 	for i in range(len(poi)):
 		for j in range(i + 1,len(poi)):
-			edges.append((i, j, ((lat_long[i][0] - lat_long[j][0]) ** 2  + (lat_long[i][1] - lat_long[j][1])** 2) ** 0.5))
+			d = ((lat_long[i][0] - lat_long[j][0]) ** 2  + (lat_long[i][1] - lat_long[j][1])** 2) ** 0.5
+			if d < 0.04:
+				edges.append((i, j, d)
 	edges.sort(key=lambda x: x[2])
 	for ind, edge in enumerate(edges):
 		nodes = checkDegree(graph)
