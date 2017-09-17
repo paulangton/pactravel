@@ -8,7 +8,10 @@ dest = Next_Desitination()
 
 @app.route('/next_locations')
 def next_locations():
-    return jsonify({'dest': dest.getLocations('NYC')})
+    loc = request.args['location']
+    print(loc)
+    # loc = "NYC"
+    return jsonify({'dest': dest.getLocations(loc)})
 
 @app.route('/poi')
 def points_of_interest():
