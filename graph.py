@@ -117,6 +117,7 @@ def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit
 	con = nx.is_connected(graph)
 	if not con:
 		cc = list(nx.connected_components(graph))
+		cc = map(lambda x: list(x), cc)
 		for i in range(len(cc)-1):
 			graph.add_edge(cc[i][0], cc[i+1][0], isFlight=False, distance=10)
 	# Put edges in one by one until cannot
