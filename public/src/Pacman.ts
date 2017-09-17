@@ -31,10 +31,13 @@ class Pacman {
     this.renderState += 1;
   }
 
-  // Reverses pacman's direction
+  // Changes pacman's direction
   turn(toNode: ANode): void {
     this.fromNode = this.toNode
     this.toNode = toNode
+    console.log("turnings");
+    console.log(this.fromNode);
+    console.log(this.toNode);
   }
 
   // returns a minimum distance (speed) for pacman to move in order to complete
@@ -43,33 +46,22 @@ class Pacman {
     let speed = n;
     let latDif: number = this.toNode.lat - this.lat;
     let longDif: number = this.toNode.long - this.long;
-    let direction = Math.atan2(latDif, longDif); // in radians
+    let angle = Math.atan2(latDif, longDif);
+    angle = angle < 0 ? 2 * Math.PI + angle : angle;
+    let direction = angle; // in radians
     console.log(direction);
 
-    if (latDif > 0) {
-      this.lat -= speed * Math.sin(direction);
-      if (this.lat > this.toNode.lat) {
-        this.lat = this.toNode.lat
-      }
+    let y_c = speed * Math.sin(direction);
+    if (this.lat + y_c <= this.toNode.lat + n && this.lat + y_c >= this.toNode.lat - n) {
+      this.lat = this.toNode.lat;
     }
-    else {
-      this.lat += speed * Math.sin(direction);
-      if (this.lat < this.toNode.lat) {
-        this.lat = this.toNode.lat
-      }
+    this.lat += y_c;
+
+    let x_c = speed * Math.cos(direction);
+    if (this.long + x_c <= this.toNode.long + n && this.lat + x_c >= this.toNode.long - n) {
+      this.long = this.toNode.long;
     }
-    if (longDif > 0) {
-      this.long -= speed * Math.cos(direction);
-      if (this.long > this.toNode.long) {
-        this.long = this.toNode.long
-      }
-    }
-    else {
-      this.long += speed * Math.cos(direction);
-      if (this.long < this.toNode.long) {
-        this.long = this.toNode.long
-      }
-    }
+    this.long += x_c;
   }
 
   // draws a pacman

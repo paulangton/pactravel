@@ -3,7 +3,7 @@ import time
 import swagger_client
 from swagger_client.rest import ApiException
 from pprint import pprint
-import networkx as nx 
+import networkx as nx
 from networkx.readwrite import json_graph
 from amadeus.next_location import Next_Desitination
 
@@ -25,7 +25,7 @@ def api_call(latitude=42.3656132, longitude=-71.00956020000001, category="Museum
 
 	# create an instance of the API class
 	api_instance = swagger_client.DefaultApi()
-	apikey = '5ZuuDhbYHXWkNpo7AKhxr6Ceb1aV4z3C' # str | API Key provided for your account, to identify you for API access. Make sure to keep this API key secret.
+	apikey = 'xe3IjAFO8GO5UqpQVe4kpzfjHxl4ERtz' # str | API Key provided for your account, to identify you for API access. Make sure to keep this API key secret.
 	radius = 42 # int | Radius around the center to look for points-of-interest around the given latitude and longitude in kilometers (km) (default to 42)
 	lang = 'EN' # str | The preferred language of the content related to each point of interest. Content will be returned in this language if available (optional) (default to EN)
 	category = 'Museum' # str | Filters the resulting points_of_interest to include only results which have a least one category containing the given provided word. Good examples are <em>museum</em>, <em>landmark</em> or <em>church</em> (optional) (default to Museum)
@@ -34,7 +34,7 @@ def api_call(latitude=42.3656132, longitude=-71.00956020000001, category="Museum
 	social_media = False # bool | Enabling this includes images from Instagram in the output results. This is disabled by default, since these images are often just pictures of people or food, which often have little relevance to the actual location (optional) (default to false)
 	image_size = 'MEDIUM' # str | The size of the images you'd like to see in the response (optional) (default to MEDIUM)
 	number_of_images = 1 # int | Number of images to display. (optional) (default to 4)
-	try: 
+	try:
 		# YapQ Geosearch - Find landmarks and attractions near a given point.
 		api_response = api_instance.yap_q_geosearch(apikey, latitude, longitude, radius, lang=lang, category=category, geonames=geonames, vibes=vibes, social_media=social_media, image_size=image_size, number_of_images=number_of_images, number_of_results=number_of_results)
 		return api_response.points_of_interest
@@ -81,11 +81,11 @@ def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit
 				minind = j
 				mind = d
 
-	
-	
+
+
 	edges.sort(key=lambda x: x[2])
 	edges.insert(0, (0, minind, mind))
-	
+
 
 	for ind, edge in enumerate(edges):
 		nodes = checkDegree(graph)
@@ -103,9 +103,9 @@ def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit
 					if abs(intersection[0] - l[1]) <= 0.005 and abs(intersection[1] - l[0]) <= 0.005:
 						notInLocation = False
 						break
-				
 
-			
+
+
 
 			if not fail or not added_edges:
 				added_edges.append(edge)
@@ -122,11 +122,11 @@ def genGraph(number_of_results=15, initial_airport="Boston Logan Airport", latit
 
 
 	data = json_graph.node_link_data(graph)
-	
+
 	# with open('test_json.txt', 'w') as f:
 	# 				f.write(str(data))
-	
+
 	return data
 	#nx.draw(graph)
-	
+
 #genGraph()
