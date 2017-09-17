@@ -13,3 +13,11 @@ function PixelCoords(map: any, latLong : any) : number[] {
     );
     return [0,0];
 }
+
+// inserts an HTML Element after the given reference node
+function insertAfter(newNode : HTMLElement, referenceNode : HTMLElement) {
+    let p = referenceNode.parentNode
+    if (p != null) {
+      p.insertBefore(newNode, referenceNode.nextSibling);
+    }
+}

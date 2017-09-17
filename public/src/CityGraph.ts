@@ -43,13 +43,43 @@ class Experience {
 class ANode extends Experience {
   lat : number;
   long : number;
+  city : String;
+  name : String;
+  description : String;
+  visited : boolean;
+  hasCherry : boolean;
 
-  constructor(lat : number, long : number) {
+  constructor(lat : number, long : number, name : String, description? : String, hasCherry? : boolean, city? : String) {
     super();
     this.lat = lat;
     this.long = long;
+    this.visited = false;
+    this.name = name;
+    if (hasCherry) {
+      this.hasCherry = hasCherry;
+    }
+    else {
+      this.hasCherry = false;
+    }
+    if (city) {
+      this.city = city;
+    }
+    if (description) {
+      this.description = description;
+    }
   }
 
+  visit() : void {
+    this.visited = true;
+  }
+
+  // draws a node
+  draw() : void {
+    if (this.hasCherry && !this.visited) {
+      // drop a cherry
+    }
+
+  }
 }
 
 class TravelNode extends ANode {
@@ -71,8 +101,18 @@ class AEdge extends Experience {
     }
 }
 
+// intercity edge has an edge a to b but not necessarily b to a
 class InterCityEdge extends AEdge {
+  transportType : String;
+  cost : number;
+  time : number; // in hours
 
+  constructor(a : ANode, b : ANode, transportType : String, cost : number, time : number) {
+    super(a, b);
+    this.transportType = transportType;
+    this.cost = cost;
+    this.time = time;
+  }
 }
 
 class IntraCityEdge extends AEdge {
