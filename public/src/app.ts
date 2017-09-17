@@ -155,25 +155,26 @@ function GetInputDirection() {
 
 function GetCityGraphFromServerGraph(serverGraph: any): CityGraph {
   let cg = new CityGraph();
-  // Sort is important for the edges to be right
-  serverGraph.nodes.sort(function (n1: any, n2: any) { n1.id < n2.id ? -1 : 1 });
+  let nodeTracker : any = {};
   for (let n of serverGraph.nodes) {
     let newNode: ANode;
-    if (n.isAirport) {
+    if (n.desc == "Airport") {
       newNode = new TravelNode(n.location[0], n.location[1]);
     } else {
       newNode = new AttractionNode(n.location[0], n.location[1]);
     }
     newNode.data = n;
+    newNode.id = n.id;
     cg.Nodes.push(newNode);
+    nodeTracker[newNode.id] = newNode;
   }
 
   for (let e of serverGraph.links) {
     let newEdge: AEdge;
     if (e.isFlight) {
-      newEdge = new InterCityEdge(cg.Nodes[e.source], cg.Nodes[e.target]);
+      newEdge = new InterCityEdge(nodeTracker[e.source], nodeTracker[e.target]);
     } else {
-      newEdge = new IntraCityEdge(cg.Nodes[e.source], cg.Nodes[e.target]);
+      newEdge = new IntraCityEdge(nodeTracker[e.source], nodeTracker[e.target]);
     }
     newEdge.data = e.data;
     cg.Edges.push(newEdge);

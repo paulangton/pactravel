@@ -60,6 +60,7 @@ class CityGraph {
         let longBounds = [0,0];
 
         for(let n of this.Nodes) {
+            if(n instanceof TravelNode) continue; 
             latSum += n.lat;
             longSum += n.long;
             latBounds[0] = Math.min(latBounds[0], n.lat);
@@ -84,6 +85,7 @@ class TestExperience extends Experience {
 class ANode extends Experience {
     lat: number;
     long: number;
+    id: number;
     data: any;
     city: String;
     name: String;
