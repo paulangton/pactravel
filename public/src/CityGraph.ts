@@ -1,19 +1,19 @@
 // To represent a city graph
 class CityGraph {
 
-    Nodes : ANode[] = [];
-    Edges : AEdge[] = [];
+    Nodes: ANode[] = [];
+    Edges: AEdge[] = [];
 
-    GetBestEdge(node : ANode, angle: number) : AEdge {
+    GetBestEdge(node: ANode, angle: number): AEdge {
         return this.Edges[0];
     }
 
-    draw(map : any) {
-        for(let e of this.Edges) {
+    draw(map: any) {
+        for (let e of this.Edges) {
             var path = new google.maps.Polyline({
                 path: [
-                    {lat: e.a.lat, lng: e.a.long},
-                    {lat: e.b.lat, lng: e.b.long}
+                    { lat: e.a.lat, lng: e.a.long },
+                    { lat: e.b.lat, lng: e.b.long }
                 ],
                 strokeColor: '#FF0000',
                 strokeOpacity: 1.0,
@@ -22,7 +22,7 @@ class CityGraph {
 
             path.setMap(map);
         }
-        for(let n of this.Nodes) {
+        for (let n of this.Nodes) {
             var cityCircle = new google.maps.Circle({
                 strokeColor: '#FF0000',
                 strokeOpacity: 0.8,
@@ -30,7 +30,7 @@ class CityGraph {
                 fillColor: '#FF0000',
                 fillOpacity: 0.35,
                 map: map,
-                center: {lat: n.lat, lng: n.long},
+                center: { lat: n.lat, lng: n.long },
                 radius: 100
             });
         }
@@ -43,23 +43,27 @@ class Experience {
 
 }
 
-class ANode extends Experience {
-    lat : number;
-    long : number;
-    data : any;
-    city : String;
-    name : String;
-    description : String;
-    visited : boolean;
-    hasCherry : boolean;
+class TestExperience extends Experience {
 
-    constructor(lat : number, long : number, name? : String, description? : String, hasCherry? : boolean, city? : String) {
+}
+
+class ANode extends Experience {
+    lat: number;
+    long: number;
+    data: any;
+    city: String;
+    name: String;
+    description: String;
+    visited: boolean;
+    hasCherry: boolean;
+
+    constructor(lat: number, long: number, name?: String, description?: String, hasCherry?: boolean, city?: String) {
         super();
         this.lat = lat;
         this.long = long;
         this.visited = false;
         if (name) {
-          this.name = name;
+            this.name = name;
         }
         if (hasCherry) {
             this.hasCherry = hasCherry;
@@ -75,12 +79,12 @@ class ANode extends Experience {
         }
     }
 
-    visit() : void {
+    visit(): void {
         this.visited = true;
     }
 
     // draws a node
-    draw() : void {
+    draw(): void {
         if (this.hasCherry && !this.visited) {
             // drop a cherry
         }
@@ -97,11 +101,11 @@ class AttractionNode extends ANode {
 }
 
 class AEdge extends Experience {
-    a : ANode;
-    b : ANode;
-    data : any;
+    a: ANode;
+    b: ANode;
+    data: any;
 
-    constructor(a : ANode, b : ANode) {
+    constructor(a: ANode, b: ANode) {
         super();
         this.a = a;
         this.b = b;
@@ -110,20 +114,20 @@ class AEdge extends Experience {
 
 // intercity edge has an edge a to b but not necessarily b to a
 class InterCityEdge extends AEdge {
-    transportType : String;
-    cost : number;
-    time : number; // in hours
+    transportType: String;
+    cost: number;
+    time: number; // in hours
 
-    constructor(a : ANode, b : ANode, transportType? : String, cost? : number, time? : number) {
+    constructor(a: ANode, b: ANode, transportType?: String, cost?: number, time?: number) {
         super(a, b);
         if (transportType) {
-          this.transportType = transportType;
+            this.transportType = transportType;
         }
         if (cost) {
-          this.cost = cost;
+            this.cost = cost;
         }
         if (time) {
-          this.time = time;
+            this.time = time;
         }
     }
 }
