@@ -1,4 +1,12 @@
-# hackmit2017
+# pactravel
+
+Devpost: https://devpost.com/software/hackmit2017
+
+Activate virtual environment (Python 3)
+. venv/bin/activate
+
+Install python requirements
+pip install -r requirements.txt
 
 Install Typescript:
 npm install -g tsc
@@ -6,7 +14,10 @@ npm install -g tsc
 Compile Typescript:
 tsc -p ./public/src/tsconfig.json app.ts
 
-Open ./public/index.html in your favorite browser to experience the magic.
+Run flask server: 
+export FLASK_APP=main.py
+flask run
 
-to activate virtual environment
-. venv/bin/activate
+Open ./public/index.html in your favorite browser to experience the magic!
+
+
